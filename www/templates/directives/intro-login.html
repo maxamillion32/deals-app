@@ -1,0 +1,42 @@
+<div class="center">
+  <form ng-submit="doLogin()">
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Email</span>
+        <input type="email" ng-model="loginData.userEmail" placeholder="Email">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Password</span>
+        <input type="password" ng-model="loginData.userPassword" placeholder="Password">
+      </label>
+    </div>
+    <div class="padding">
+      <button class="button button-block" type="submit">Sign in</button>
+    </div>
+    
+  </form>
+
+  <p>
+    -- or --
+  </p>
+  
+  <button class="button button-positive icon-left ion-social-facebook" ng-click="doLoginSocial('facebook');">
+    Sign in with Facebook
+  </button>
+  
+  <p class="padding small">
+    *By signing up, you agree to our Terms of Use and Privacy Policy 
+  </p>
+      
+  <!-- other -->
+  <div class="row">
+      <div class="col">
+         <button class="button button-block" ng-click="signUp()">Sign up</button>
+      </div>
+      <div class="col">
+        <button class="button button-block" ng-click="changePassword('lost')">Forgot password?</button>
+      </div>
+  </div>
+  
+
+</div>

@@ -1,0 +1,116 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            $base-color !default;
+
+$greylight: #f2f2f2
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+
+// Colors
+// -------------------------------
+$greylight:                            #f2f2f2 !default;
+$positive:                          #F6D127 !default;
+
+// Base
+// -------------------------------
+$base-background-color:           #fff !default;
+$base-color:                      #515151 !default;
+
+
+
+// Slidebox Intro
+// -------------------------------
+.intro.slidebox {
+    background: #fff;
+    width: 100vw;
+    height: 70vh;
+    text-align: center;
+}
+.intro.slide {
+    padding: 30px;
+}
+.intro.below {
+    width: 100vw;
+    height: 20vh;
+    padding: 15px;
+    text-align: center;
+}
+.intro.settings {
+    width: 100vw;
+    padding: 15px;
+    text-align: center;
+}
+.input-label {
+    width: 100% !important;
+    text-align: left !important;
+}
+
+
+// Profile
+// -------------------------------
+.profile img {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+
+
+
+// Post
+// -------------------------------
+.post-images {
+    background: #fff;
+}
+.post-images img {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+}
+
+
+// Decorators and Other
+// -------------------------------
+
+.center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.spinner.spinner-small svg {
+    height: 15px !important;
+    width: auto;
+}
+
+span.small {
+    font-size: 12px;
+}
+
+
+// Placeholders
+// -------------------------------
+// see backup
+
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";

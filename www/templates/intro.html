@@ -1,0 +1,57 @@
+<ion-view>
+  <ion-content 
+    has-bouncing="false"
+    ng-switch="status.mode">
+    
+    <div ng-switch-when="0">
+      <!-- when logged out -->
+      <ion-slide-box 
+        class="intro slidebox"
+        on-slide-changed="slideHasChanged($index)">
+        <ion-slide>
+          <div class="box intro slide"><h1>BLUE</h1></div>
+        </ion-slide>
+        <ion-slide>
+          <div class="box intro slide"><h1>YELLOW</h1></div>
+        </ion-slide>
+        <ion-slide>
+          <div class="box intro slide"><h1>PINK</h1></div>
+        </ion-slide>
+      </ion-slide-box>
+      <div class="intro below">
+        <button class="button button-positive icon-left ion-social-facebook" ng-click="doLoginSocial('facebook');">
+          Sign in with Facebook
+        </button>
+        <p class="small">
+          *By signing up, you agree to our Terms of Use and Privacy Policy 
+        </p>
+      </div>
+    </div>
+    <div ng-switch-when="1">
+      <!-- when logged in -->
+      <div class="intro settings">
+        <p>
+          Optional header
+        </p>
+        <div ng-switch="status['loadingProfile']">
+          <div ng-switch-when="true">
+            Loading personalized data... <br>
+            <ion-spinner icon="dots"></ion-spinner>
+          </div>
+          <div ng-switch-when="false">
+            <intro-settings></intro-settings>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    
+  </ion-content>
+  <ion-footer-bar align-title="left">
+    <h1 class="title"></h1>
+    <div class="buttons" ng-click="skipIntro()">
+      <button class="button">Skip for now</button>
+    </div>
+  </ion-footer-bar>
+</ion-view>
