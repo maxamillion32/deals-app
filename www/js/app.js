@@ -21,6 +21,7 @@
  */
  
 var FBURL                 = "https://templates-noodlio.firebaseio.com/deals-app";
+var LIMITVALUE            = 50;
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -38,6 +39,11 @@ angular.module('starter', [
   'starter.controllers-account',
   'starter.services-auth',
   'starter.services-profile',
+  'starter.services-personal',
+  
+  // browsing
+  'starter.controllers-live',
+  'starter.services-products',
   
   // cordova
   'starter.services-cordova-camera',
@@ -79,7 +85,9 @@ angular.module('starter', [
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  
+  $ionicConfigProvider.tabs.position('top')
   
   // Define the resolve function, which checks whether the user is Authenticated
   // It fires $stateChangeError if not the case
@@ -96,38 +104,83 @@ angular.module('starter', [
   })
 
   .state('intro', {
-      url: '/intro/:mode',
-      templateUrl: 'templates/intro.html',
-      controller: 'AccountCtrl'
-    }
-  )
+    url: '/intro/:mode',
+    templateUrl: 'templates/intro.html',
+    controller: 'AccountCtrl'
+  })
   
+  // settings
+  .state('account', {
+    url: '/account',
+    templateUrl: 'templates/auth/account.html',
+    controller: 'AccountCtrl'
+  })
+  
+  .state('search', {
+    url: '/search',
+    views: {
+      'tab-search': {
+        templateUrl: 'templates/live.html',
+        controller: 'LiveCtrl'
+      }
+    }
+  })
+  
+  // browsing views
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
+    templateUrl: 'templates/tabs.html',
+    controller: 'AppCtrl'
   })
   
-  .state('app.home', {
-    url: '/home',
+  .state('app.live', {
+    url: '/live',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/home.html',
-        //controller: 'HomeCtrl'
+      'tab-live': {
+        templateUrl: 'templates/live.html',
+        controller: 'LiveCtrl'
+      }
+    }
+  })
+  .state('app.trending', {
+    url: '/trending',
+    views: {
+      'tab-trending': {
+        templateUrl: 'templates/trending.html',
+        controller: 'LiveCtrl'
+      }
+    }
+  })
+  .state('app.wallet', {
+    url: '/wallet',
+    views: {
+      'tab-wallet': {
+        templateUrl: 'templates/wallet.html',
+        controller: 'LiveCtrl'
       }
     }
   })
   
-  .state('app.account', {
-    url: '/account',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/auth/account.html',
-        controller: 'AccountCtrl'
-      }
-    }
+  .state('submit', {
+    url: '/submit',
+    templateUrl: 'templates/submit.html',
+    controller: 'AppCtrl'
   });
+  
+  
+  
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/redirect');
+})
+
+
+.controller('AppCtrl', function(
+  $scope, $state) {
+    
+  $scope.goTo = function(nextState) {
+    $state.go(nextState)
+  };
+
 });

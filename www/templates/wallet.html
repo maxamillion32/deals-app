@@ -1,0 +1,78 @@
+<ion-view >
+
+  <ion-header-bar align-title="center" class="bar-positive">
+  <div class="buttons">
+    <button class="button button-icon ion-ios-settings" ng-click="goTo('account')"></button>
+  </div>
+  <h1 class="title">Wallet</h1>
+  <div class="buttons">
+    <button class="button button-icon ion-ios-search" ng-click="goTo('search')"></button>
+  </div>
+  
+</ion-header-bar>
+
+  <ion-content>
+    
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    
+
+
+    
+    <h1>Wallet</h1>
+    
+    <!-- [local, online, voucher] -->
+    <div ng-repeat="(key, category) in Categories" ng-hide="!CategoryNonEmpty[key]">
+
+      <!-- category header -->
+      <div class="row row-center">
+        <div class="col col-center text-left">
+            <h1 id="category-title">
+              {{category.title}}
+            </h1>
+        </div>
+        <div class="col col-center text-right">
+            <button class="button button-outline button-dark button-small" ng-click="goToCategory(key)">View all</button>
+        </div>
+      </div>
+      <!-- ./ category header -->
+
+      <!-- items per category -->
+      <div ng-init="loadLatest(key, 4)" ng-switch="status[key].loading">
+        <div ng-switch-when="true" class="center">
+          <ion-spinner></ion-spinner>
+        </div>
+        <div ng-switch-when="false">
+          <ion-slide-box on-slide-changed="slideHasChanged($index)">
+            <ion-slide ng-repeat="item in getProductsMeta(key) | orderBy: sortType">
+
+              <!-- item card start -->
+              <div class="list card">
+
+                <div class="item item-text-wrap">
+                  <h2>{{item.value.title}}</h2>
+                </div>
+
+                <a class="item item-image" href="" ng-click="goToItem(item.key)">
+                  <img class="thumbnail-card" ng-src="{{getProductIcon(item.key)}}">
+                </a>
+
+                <a class="item">
+                  <p>${{item.value.price}}</p>
+                  <p>{{item.value.summary}}</p>
+                </a>
+
+              </div>
+              <!-- ./ item card end -->
+
+            </ion-slide>
+          </ion-slide-box>
+        </div>
+      </div> <!-- ./ items per category -->
+
+    </div>
+    
+  </ion-content>
+</ion-view>

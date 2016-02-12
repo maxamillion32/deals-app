@@ -1,9 +1,12 @@
 <ion-view view-title="Account settings">
+  
+  
+  
   <ion-content ng-switch="status.loading">
 
     <!-- view is loading... -->
     <div ng-switch-when="true" class="padding center">
-      <ion-spinner></ion-spinner>
+      <ion-spinner icon="dots"></ion-spinner>
 
       <p ng-show="status.toggleLoginManual">
         <button class="button button-full-dark" ng-click="login()">Toggle login manually</button>

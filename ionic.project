@@ -1,5 +1,5 @@
 {
-  "name": "sample",
+  "name": "deals-app",
   "app_id": "b476418a",
   "gulpStartupTasks": [
     "sass",

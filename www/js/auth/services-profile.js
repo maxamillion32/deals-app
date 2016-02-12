@@ -53,10 +53,14 @@ angular.module('starter.services-profile', [])
   // SET  users/$uid/$globalProperty
   self.setGlobal = function(uid, globalProperty, globalValue) {
     var childRef = "users/" + uid +"/" + globalProperty;
-    Utils.showMessage("Updating profile...");
+    if(globalProperty != 'other') {
+      Utils.showMessage("Updating profile...");
+    }
     return FireFunc.set(childRef, globalValue).then(
       function(successCallback){
-        Utils.showMessage("Profile updated", 750);
+        if(globalProperty != 'other') {
+          Utils.showMessage("Profile updated", 750);
+        }
         return successCallback;
       },
       function(error){

@@ -107,7 +107,7 @@ angular.module('starter.controllers-redirect', [])
     if($scope.status['mode'] != 2) {
       $state.go('intro', {mode: $scope.status['mode']});
     } else {
-      $state.go('app.home');
+      $state.go('app.live');
     }
   };
 

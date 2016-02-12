@@ -3,7 +3,7 @@ angular.module('starter.controllers-account', [])
 .controller('AccountCtrl', function(
   $rootScope, $scope, $state, $stateParams, $timeout, 
   $ionicModal, $ionicHistory, $ionicPopup, $ionicActionSheet,
-  Auth, Profile, Codes, Utils) {
+  Auth, Profile, Codes, Utils, Personal) {
 
   // ----
   // Init other
@@ -19,7 +19,8 @@ angular.module('starter.controllers-account', [])
     updateMessage: "Update account", //default
     updateButtonClass: 'button-positive', //default
     toggleLoginManual: false,
-    mode: $stateParams.mode
+    mode: $stateParams.mode,
+    loadPersonalOptionsMessage: "",
   };
 
 
@@ -31,7 +32,7 @@ angular.module('starter.controllers-account', [])
 
   $scope.$on('$ionicView.enter', function(e) {
     
-    if($state.current.name == 'app.account') {
+    if($state.current.name == 'account') {
       checkAuth();
     } else {
       handleIntro();
@@ -81,7 +82,7 @@ angular.module('starter.controllers-account', [])
   // handles when the user is logged out
   function handleLoggedOut() {
     
-    if($state.current.name == 'app.account') {
+    if($state.current.name == 'account') {
       openLogin();
       // if for some reason the modals are not automatically opened, show a button
       $timeout(function(){
@@ -121,7 +122,7 @@ angular.module('starter.controllers-account', [])
       disableAnimate: true,
       disableBack: true
     });
-    $state.go('app.home');
+    $state.go('app.live');
   };
 
   // Open the login modal
@@ -200,7 +201,7 @@ angular.module('starter.controllers-account', [])
     // handle logged in
     $scope.AuthData = AuthData;
     console.log('proceedLogin', $state.current.name)
-    if ($state.current.name == 'app.account') {
+    if ($state.current.name == 'account') {
       handleLoggedIn();
     } else {
       $scope.status['mode'] = 1;
@@ -658,10 +659,10 @@ angular.module('starter.controllers-account', [])
       disableBack: true
     });
     
-    if($state.current.name == 'app.account') {
-      $state.go('app.account');
+    if($state.current.name == 'account') {
+      $state.go('account');
     } else {
-      $state.go('app.home');
+      $state.go('app.live');
     }
     
   };
@@ -681,7 +682,8 @@ angular.module('starter.controllers-account', [])
     }
   };
 
-  $scope.OtherData = {};
+  $scope.OtherData = {};      // data loaded from user in users/:uid/other
+  $scope.OtherDataForm = {};  // used for search in autocomplete form
   function loadOtherData() {
     $scope.status['loadingOtherData'] = true;
     if($scope.AuthData.hasOwnProperty('uid')){
@@ -693,6 +695,7 @@ angular.module('starter.controllers-account', [])
             $scope.ProfileData  = ProfileData;
             if(ProfileData.hasOwnProperty('other')) {
               $scope.OtherData    = ProfileData.other;
+              prepareSelected();
             }
           };
           
@@ -705,19 +708,107 @@ angular.module('starter.controllers-account', [])
     };
   };
   
-  $scope.saveOtherData = function() {
-    if($scope.OtherData.city || $scope.OtherData.things || $scope.OtherData.brands) {
+  
+  function saveOtherData() {
+    if($scope.OtherData) {
       Profile.setGlobal($scope.AuthData.uid, 'other', $scope.OtherData).then(
         function(success){
-          $scope.closeOther();
-        })
+          //$scope.OtherDataForm.things_raw = "";
+          console.log('yuhu')
+        },
+        function(error){
+          console.log('error saving data');
+        }
+      )
     }
   };
+
+  
+  // autocomplete form to load pre-defined options (settings/personal/:personalField)
+  // ** todo: rename it to personal settings
+  $scope.PersonalOptions = {
+    'locations': [],
+    'things': [],
+    'brands': []
+  };
+  
+  $scope.loadPersonal = function(personalField) {
+    console.log('loadPersonal', personalField)
+    // load once per personalField
+    
+    if(!$scope.PersonalOptions[personalField] || $scope.PersonalOptions[personalField].length <= 0) {
+      $scope.status['loadingPersonalOptions'] = true;
+      Personal.get(personalField).then(
+        function(matches){
+          console.log('matches', matches)
+          $scope.status['loadingPersonalOptions'] = false;
+          $scope.PersonalOptions[personalField] = matches;
+        },
+        function(error){
+          console.log(error)
+          $scope.status['loadingPersonalOptions'] = false;
+          $scope.status['loadPersonalOptionsMessage'] = "Something went wrong.. unable to retrieve options";
+      })
+    };
+    
+  };
+  
+  $scope.addToOther = function(personalField, value) {
+    if($scope.OtherData.hasOwnProperty(personalField)) {
+      if(!Utils.isInArray(value, $scope.OtherData[personalField])) {
+        $scope.OtherData[personalField].push(value);
+        saveOtherData();
+        $scope.SelectedOther[personalField][value] = true;
+      }
+    } else {
+      $scope.OtherData[personalField] = [value];
+      $scope.SelectedOther[personalField][value] = true;
+      saveOtherData();
+    }
+    console.log($scope.OtherData);
+  };
+  
+  $scope.removeFromOther = function(personalField, value) {
+    
+    console.log('removeFromOther', 
+    value, 
+    $scope.OtherData[personalField], 
+    $scope.OtherData[personalField].indexOf(value))
+    
+    if($scope.OtherData.hasOwnProperty(personalField)) {
+      $scope.SelectedOther[personalField][value] = false;
+      $scope.OtherData[personalField].splice($scope.OtherData[personalField].indexOf(value),1);
+      saveOtherData();
+    };
+    console.log($scope.SelectedOther);
+  };
+  
+  $scope.capitalizeFirstLetter = function(input) {
+    return Utils.capitalizeFirstLetter(input);
+  };
+  
+  // do not display selected in search results
+  $scope.SelectedOther = {
+    'locations': {},
+    'things': {},
+    'brands': {}
+  };
+  function prepareSelected() {
+    angular.forEach($scope.OtherData, function(value, personalField) {
+      $scope.SelectedOther[personalField] = {};
+      for (var i=0; i<$scope.OtherData[personalField].length; i++) {
+        $scope.SelectedOther[personalField][$scope.OtherData[personalField][i]] = true;
+      }
+    })
+    console.log($scope.SelectedOther);
+  };
+  
+  
   
   // ---------------------------------------------------------------------------
   // Intro
   $scope.skipIntro = function() {
-    $state.go('app.home');
+    $state.go('app.live');
   };
 
   $scope.goTo = function(nextState) {

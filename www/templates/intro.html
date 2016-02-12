@@ -30,15 +30,16 @@
     <div ng-switch-when="1">
       <!-- when logged in -->
       <div class="intro settings">
-        <p>
-          Optional header
-        </p>
         <div ng-switch="status['loadingProfile']">
-          <div ng-switch-when="true">
+          <div ng-switch-when="true" class="padding center">
             Loading personalized data... <br>
             <ion-spinner icon="dots"></ion-spinner>
           </div>
           <div ng-switch-when="false">
+            <div class="bar bar-header bar-positive">
+              <h1 class="title">Personalisation</h1>
+            </div>
+            <div style="height:44px;"></div>
             <intro-settings></intro-settings>
           </div>
         </div>

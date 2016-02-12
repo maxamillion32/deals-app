@@ -1,0 +1,25 @@
+<!-- featured card start -->
+<div class="list card">
+
+  <a class="item item-image" href="" 
+    ng-click="goToItem(item.key)" 
+    ng-show="getProductImage(item.key)">
+    <img class="thumbnail-card" 
+      ng-src="{{getProductImage(item.key)}}">
+  </a>
+
+  <a class="item item-text-wrap">
+    <p>
+      <span class="old-price">${{item.value.price_old}}</span>
+      <span class="offer-value">${{item.value.price_now}}</span>
+    </p>
+  </a>
+  
+  <div class="item item-text-wrap">
+    <h2>
+      {{item.value.title}}
+    </h2>
+  </div>
+  
+</div>
+<!-- ./ featured card end -->

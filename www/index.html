@@ -29,6 +29,10 @@
     <script src="js/auth/controllers-account.js"></script>
     <script src="js/auth/services-auth.js"></script>
     <script src="js/auth/services-profile.js"></script>
+    <script src="js/auth/services-personal.js"></script>
+    
+    <script src="js/browse/controllers-live.js"></script>
+    <script src="js/browse/services-products.js"></script>
     
     <script src="js/services-codes.js"></script>
     <script src="js/services-utils.js"></script>
@@ -38,6 +42,23 @@
   </head>
 
   <body ng-app="starter">
+    
+    <ion-nav-bar class="bar-positive" ng-controller="AppCtrl">
+
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      
+      <ion-nav-buttons side="left">
+      <button class="button button-icon ion-ios-settings" ng-click="goTo('account')"></button>
+      </ion-nav-buttons>
+    
+      <ion-nav-buttons side="right">
+      <button class="button" ng-click="doSomething()">
+        <button class="button button-icon ion-ios-search" ng-click="goTo('search')"></button>
+      </button>
+    </ion-nav-buttons>
+    </ion-nav-bar>
+    
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

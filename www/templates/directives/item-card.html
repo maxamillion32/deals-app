@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col col-50">
+
+    <!-- item card start -->
+    <div class="list card" ng-show="ProductsMeta[productType][$index + 0 + slideCount].value.title">
+    
+      
+    
+      <a class="item item-image" href="" 
+        ng-click="goToItem(ProductsMeta[productType][$index + 0 + slideCount].key)" 
+        ng-show="getProductImage(ProductsMeta[productType][$index + 0 + slideCount].key)">
+        <img class="thumbnail-card" 
+          ng-src="{{getProductImage(ProductsMeta[productType][$index + 0 + slideCount].key)}}">
+      </a>
+
+      <a class="item item-text-wrap">
+        <p>
+          <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_old}}</span>
+          <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_now}}</span>
+        </p>
+      </a>
+      
+      <div class="item item-text-wrap">
+        <h2>
+          {{ProductsMeta[productType][$index + 0 + slideCount].value.title}}
+        </h2>
+      </div>
+      
+    </div>
+    <!-- ./ item card end -->
+    
+    
+    
+  </div>
+  <div class="col col-50">
+    
+    <!-- item card start -->
+    <div class="list card" ng-show="ProductsMeta[productType][$index + 1 + slideCount].value.title">
+    
+      
+    
+      <a class="item item-image" href="" 
+        ng-click="goToItem(ProductsMeta[productType][$index + 1 + slideCount].key)" 
+        ng-show="getProductImage(ProductsMeta[productType][$index + 1 + slideCount].key)">
+        <img class="thumbnail-card" 
+          ng-src="{{getProductImage(ProductsMeta[productType][$index + 1 + slideCount].key)}}">
+      </a>
+      
+      <a class="item">
+        <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount].value.price_old}}</span>
+          <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount].value.price_now}}</span>
+      </a>
+      
+      <div class="item item-text-wrap">
+        <h2>
+          {{ProductsMeta[productType][$index + 1 + slideCount].value.title}}
+        </h2>
+      </div>
+
+      
+    
+    </div>
+    <!-- ./ item card end -->
+    
+  </div>
+</div>
+

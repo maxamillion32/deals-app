@@ -1,18 +1,135 @@
-<div class="list">
+  <!-- -------------------------------------------------------------------- -->
+  <!-- LOCATIONS -->
   <label class="item item-input item-floating-label">
     <span class="input-label">City</span>
-    <input type="text" ng-model="OtherData.city"  placeholder="City">
-  </label>
-  <label class="item item-input item-floating-label">
-    <span class="input-label">Things I like</span>
-    <input type="text" ng-model="OtherData.things_raw"  placeholder="Things I like (Food, Tech, Clothes, Travel)">
-  </label>
-  <label class="item item-input item-floating-label">
-    <span class="input-label">Brands I like</span>
-    <input type="text" ng-model="OtherData.brands_raw"  placeholder="Brands I like (DKNY, FCUK, ASOS)">
+    <input type="text" ng-model="OtherDataForm.locations_raw"  
+      placeholder="City"
+      ng-change="loadPersonal('locations')">
   </label>
   
+  <!-- loading fields -->
+  <label class="item" ng-show="status['loadingPersonalOptions']">
+    <ion-spinner icon="dots"></ion-spinner>
+  </label>
+  
+  <!-- autocomplete --> 
+  <label class="item item-icon-right" 
+    ng-repeat="poption in PersonalOptions['locations'] | filter:OtherDataForm.locations_raw"
+    ng-show="OtherDataForm.locations_raw && !SelectedOther['locations'][poption]"
+    ng-click="addToOther('locations', poption)">
+    {{capitalizeFirstLetter(poption)}}
+    <i class="icon ion-ios-plus-empty"></i>
+  </label>
+    
+  <!-- selected -->  
+  <label class="item item-text-wrap"
+    style="word-break: keep-all !important;"
+    ng-show="OtherData['locations'].length > 0">
+
+    <span 
+      class="tag"
+      ng-repeat="poption in OtherData['locations'] track by $index">
+      
+      <button href="" 
+        class="button-clear button-small icon ion-ios-close-empty" 
+        ng-click="removeFromOther('locations', poption)">
+      </button>
+      {{poption}}
+      
+    </span>
+  </label>
+  <!-- -------------------------------------------------------------------- -->
+  
+  <!-- -------------------------------------------------------------------- -->
+  <!-- THINGS I LIKE -->
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Things I like</span>
+    <input type="text" ng-model="OtherDataForm.things_raw"  
+      placeholder="Things I like (Food, Tech, Clothes, Travel, ...)"
+      ng-change="loadPersonal('things')">
+  </label>
+  
+  <!-- loading fields -->
+  <label class="item" ng-show="status['loadingPersonalOptions']">
+    <ion-spinner icon="dots"></ion-spinner>
+  </label>
+  
+  <!-- autocomplete --> 
+  <label class="item item-icon-right" 
+    ng-repeat="poption in PersonalOptions['things'] | filter:OtherDataForm.things_raw"
+    ng-show="OtherDataForm.things_raw && !SelectedOther['things'][poption]"
+    ng-click="addToOther('things', poption)">
+    {{capitalizeFirstLetter(poption)}}
+    <i class="icon ion-ios-plus-empty"></i>
+  </label>
+    
+  <!-- selected -->  
+  <label class="item item-text-wrap"
+    style="word-break: keep-all !important;"
+    ng-show="OtherData['things'].length > 0">
+
+    <span 
+      class="tag"
+      ng-repeat="poption in OtherData['things'] track by $index">
+      
+      <button href="" 
+        class="button-clear button-small icon ion-ios-close-empty" 
+        ng-click="removeFromOther('things', poption)">
+      </button>
+      {{poption}}
+      
+    </span>
+  </label>
+  <!-- -------------------------------------------------------------------- -->
+  
+  <!-- -------------------------------------------------------------------- -->
+  <!-- brands I LIKE -->
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Brands I like</span>
+    <input type="text" ng-model="OtherDataForm.brands_raw"  
+      placeholder="Brands I like (ASOS, FCUK, DKNY, ...)"
+      ng-change="loadPersonal('brands')">
+  </label>
+  
+  <!-- loading fields -->
+  <label class="item" ng-show="status['loadingPersonalOptions']">
+    <ion-spinner icon="dots"></ion-spinner>
+  </label>
+  
+  <!-- autocomplete --> 
+  <label class="item item-icon-right" 
+    ng-repeat="poption in PersonalOptions['brands'] | filter:OtherDataForm.brands_raw"
+    ng-show="OtherDataForm.brands_raw && !SelectedOther['brands'][poption]"
+    ng-click="addToOther('brands', poption)">
+    {{poption}}
+    <i class="icon ion-ios-plus-empty"></i>
+  </label>
+    
+  <!-- selected -->  
+  <label class="item item-text-wrap"
+    style="word-break: keep-all !important;"
+    ng-show="OtherData['brands'].length > 0">
+
+    <span 
+      class="tag"
+      ng-repeat="poption in OtherData['brands'] track by $index">
+      
+      <button href="" 
+        class="button-clear button-small icon ion-ios-close-empty" 
+        ng-click="removeFromOther('brands', poption)">
+      </button>
+      {{poption}}
+      
+      
+    </span>
+  </label>
+  <!-- -------------------------------------------------------------------- -->
+  
+
 </div>
+
+<br>
+
 <div class="center padding">
-  <button class="button button-positive" type="submit" ng-click="saveOtherData()">Let's go..</button>
+  <button class="button button-positive" type="submit" ng-click="closeOther()">Let's go..</button>
 </div>

@@ -1,0 +1,58 @@
+<ion-view view-title="Live">
+
+  
+  
+</ion-header-bar>
+
+  <ion-content class="center grey">
+    
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      spinner="dots"
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    
+    <!-- ** todo ** featured banner -->
+      <div ng-init="loadFeaturedItems('online')" ng-show="!status.loading['featured']">
+          <ion-slide-box>
+            <ion-slide ng-repeat="item in FeaturedProductsMeta['online']" ng-show="item.key">
+              
+              <featured-card></featured-card>
+   
+            </ion-slide>
+          </ion-slide-box>
+      </div> <!-- ./ featured banner -->
+    
+    <!-- [local, online, voucher] -->
+    <div ng-repeat="productType in ['local', 'online', 'voucher']" ng-show="status['loading'][productType] != null">
+      
+      <div class="row row-header">
+        <h1 id="category-title">
+          {{productType}} deals
+        </h1>
+      </div>
+      
+
+      <!-- items per category -->
+      <div ng-init="loadLatest(productType)" ng-switch="status.loading[productType]">
+        <div ng-switch-when="true" class="center">
+          <ion-spinner icon="dots"></ion-spinner>
+        </div>
+        <div ng-switch-when="false">
+          <ion-slide-box>
+            <ion-slide ng-repeat="slideCount in slideRepeat[productType] | orderBy: sortType">
+
+              <item-card></item-card>
+
+            </ion-slide>
+          </ion-slide-box>
+        </div>
+      </div> <!-- ./ items per category -->
+
+    </div>
+    
+  </ion-content>
+  <button class="button button-float" ng-click="goTo('submit')">
+    <i class="icon ion-plus"></i>
+  </button>
+</ion-view>

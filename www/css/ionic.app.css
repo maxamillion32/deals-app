@@ -17,6 +17,30 @@ $dark:                            $base-color !default;
 
 $greylight: #f2f2f2
 */
+.button-float {
+  background: #F6D127 !important;
+  color: white !important;
+  z-index: 12 !important;
+  position: absolute !important;
+  bottom: 10px !important;
+  right: 10px !important;
+  border-radius: 100% !important;
+  min-height: 48px !important;
+  min-width: 48px !important;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transition: 0.2s linear !important;
+  transition: 0.2s linear !important;
+  -webkit-transition-property: -webkit-transform, all !important;
+  transition-property: transform, all !important; }
+
+.button-float:hover {
+  -webkit-transform: translate3d(0, -1px, 0) !important;
+  transform: translate3d(0, -1px, 0) !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4) !important;
+  background: #e1ba09 !important; }
+
 .intro.slidebox {
   background: #fff;
   width: 100vw;
@@ -33,9 +57,7 @@ $greylight: #f2f2f2
   text-align: center; }
 
 .intro.settings {
-  width: 100vw;
-  padding: 15px;
-  text-align: center; }
+  text-align: left; }
 
 .input-label {
   width: 100% !important;
@@ -48,6 +70,24 @@ $greylight: #f2f2f2
   margin-top: 30px;
   margin-bottom: 20px; }
 
+img.thumbnail-card {
+  max-height: 150px;
+  width: 100%;
+  height: auto;
+  margin: auto; }
+
+.row {
+  margin: 0px !important;
+  padding: 0px !important; }
+
+.col {
+  margin: 0px !important;
+  padding: 0px 5px !important; }
+
+.row.row-header {
+  padding: 20px !important;
+  background: #fff !important; }
+
 .post-images {
   background: #fff; }
 
@@ -55,6 +95,26 @@ $greylight: #f2f2f2
   max-width: 100%;
   height: auto;
   width: auto; }
+
+.grey {
+  background: #f2f2f2; }
+
+h1 {
+  letter-spacing: 5px;
+  text-transform: uppercase; }
+
+h1#category-title {
+  font-size: 14px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  font-weight: 600; }
+
+span.old-price {
+  color: red;
+  text-decoration: line-through; }
+
+span.offer-value {
+  color: green; }
 
 .center {
   text-align: center; }
@@ -68,6 +128,17 @@ $greylight: #f2f2f2
 
 span.small {
   font-size: 12px; }
+
+.tag {
+  padding: 5px;
+  border-radius: 6px;
+  background: #F6D127;
+  color: #fff;
+  margin-right: 10px;
+  line-height: 50px !important; }
+
+.tag button {
+  color: #fff !important; }
 
 /*!
   Ionicons, v2.0.1
@@ -4424,9 +4495,9 @@ a.subdued {
 /* Allow parent element of tabs to define color, or just the tab itself */
 .tabs-light > .tabs,
 .tabs.tabs-light {
-  border-color: #ddd;
+  border-color: transparent;
   background-color: #fff;
-  background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+  background-image: linear-gradient(0deg, transparent, transparent 50%, transparent 50%);
   color: #444; }
   .tabs-light > .tabs .tab-item .badge,
   .tabs.tabs-light .tab-item .badge {
@@ -4446,9 +4517,9 @@ a.subdued {
 
 .tabs-positive > .tabs,
 .tabs.tabs-positive {
-  border-color: #e1ba09;
+  border-color: transparent;
   background-color: #F6D127;
-  background-image: linear-gradient(0deg, #e1ba09, #e1ba09 50%, transparent 50%);
+  background-image: linear-gradient(0deg, transparent, transparent 50%, transparent 50%);
   color: #fff; }
   .tabs-positive > .tabs .tab-item .badge,
   .tabs.tabs-positive .tab-item .badge {

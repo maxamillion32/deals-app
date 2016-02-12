@@ -41,6 +41,20 @@ angular.module('starter.services-utils', [])
       }
     );
   };
+  
+  self.arrayValuesAndKeysProducts = function(targetObject) {
+        return Object.keys(targetObject).map(
+            function (key) {
+                if(targetObject[key] != null) {
+                    return {
+                        key: key, 
+                        value: targetObject[key].meta,
+                        index: targetObject[key].index
+                    }
+                }
+            }
+        );
+    };
 
   self.arrayValues = function(targetObject) {
     return Object.keys(targetObject).map(
@@ -96,6 +110,16 @@ angular.module('starter.services-utils', [])
             return 0;
     };
   };
+  
+  // used to determine the number of slides
+  self.prepareSlideRepeat = function(ProductMeta) {
+    var nbSlides = Math.ceil(ProductMeta.length/2);
+    var indexArray = [];
+    for(var i=0; i<nbSlides; i++) {
+      indexArray[i] = i;
+    };
+    return indexArray;
+  };
 
   self.capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -105,6 +129,23 @@ angular.module('starter.services-utils', [])
     var date = new Date(timestamp);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+  };
+  
+  self.isInArray = function(value, array) {
+    return array.indexOf(value) > -1;
+  };
+  
+  self.findIndexInArray = function(value, array) {
+    console.log(array.length)
+    var iter = null;
+    for (var i=0; i<array.length; i++) {
+      console.log(array[i], value)
+      if(array[i] === value) {
+        iter = i;
+        return i;
+      }
+    }
+    return iter;
   };
   
   
