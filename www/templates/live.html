@@ -13,11 +13,12 @@
     </ion-refresher>
     
     <!-- ** todo ** featured banner -->
-      <div ng-init="loadFeaturedItems('online')" ng-show="!status.loading['featured']">
+      <div ng-init="loadFeaturedItems('live')" ng-show="!status.loading['featured']">
           <ion-slide-box>
-            <ion-slide ng-repeat="item in FeaturedProductsMeta['online']" ng-show="item.key">
+            <ion-slide ng-repeat="item in FeaturedProductsMeta['live']">
               
               <featured-card></featured-card>
+              
    
             </ion-slide>
           </ion-slide-box>

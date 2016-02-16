@@ -28,6 +28,7 @@ angular.module('starter.controllers-live', [])
     $scope.loadLatest('local');
     $scope.loadLatest('online');
     $scope.loadLatest('voucher');
+    $scope.loadFeaturedItems('live');
   };
   
   
@@ -48,6 +49,7 @@ angular.module('starter.controllers-live', [])
             
             $scope.status['loading'][productType] = false;
             $scope.$broadcast('scroll.refreshComplete');
+            $ionicSlideBoxDelegate.update();
             
             
             console.log('done', productType)
@@ -101,15 +103,25 @@ angular.module('starter.controllers-live', [])
   // ---------------------------------------------------------------------------
   
   $scope.FeaturedProductsMeta = {};
-  $scope.loadFeaturedItems = function(productType) {
+  $scope.loadFeaturedItems = function(screenView) {
     $scope.status['loading']['featured'] = true;
     
-    Products.getFeaturedProductMeta(productType).then(
-      function(ProductsMeta){ 
-        if(ProductsMeta != null) {
-          $scope.FeaturedProductsMeta[productType] = Utils.arrayValuesAndKeysProducts(ProductsMeta);
-          console.log($scope.FeaturedProductsMeta)
+    console.log('loadFeaturedItems')
+    
+    Products.getFeaturedProductMeta(screenView).then(
+      function(FeaturedProductsMeta){ 
+        if(FeaturedProductsMeta != null) {
+          
+          $scope.FeaturedProductsMeta[screenView] = Utils.arrayValuesAndKeysProducts(FeaturedProductsMeta);
+          
           $scope.status['loading']['featured'] = false;
+          $scope.$broadcast('scroll.refreshComplete');
+          $ionicSlideBoxDelegate.update();
+            
+          loadProductsImage(FeaturedProductsMeta);
+          
+          console.log('loadFeaturedItems', $scope.FeaturedProductsMeta)
+          
         } else {
           $scope.status['loading']['featured'] = null;
         };
