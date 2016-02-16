@@ -1,16 +1,137 @@
 <ion-view >
-
-  <ion-header-bar align-title="center" class="bar-positive">
-  <div class="buttons">
-    <button class="button button-icon ion-ios-arrow-back" ng-click="goTo('app.live')"></button>
-  </div>
-  <h1 class="title">Submit</h1>
   
 </ion-header-bar>
-
   <ion-content>
     
-    <h1>Submit</h1>
+    <div class="center padding" ng-show="status.generalView == 'loading'">
+      
+      <br><br><br>
+      <ion-spinner icon="dots"></ion-spinner>
+      
+    </div>
+    
+    
+    
+    <div class="list" ng-show="status.generalView != 'loading'">
+      
+      <label class="item center" ng-click="importImage()">
+        
+        <span ng-show="!ProductImages.screenshot1">+ Add an image</span>
+        
+        <div class="custom-item-card" ng-show="ProductImages.screenshot1" style="background: rgba(0,0,0,0) !important;">
+          <img ng-src="{{ProductImages.screenshot1}}">
+        </div>
+         
+      </label>
+      
+      <!-- 
+      <label class="item center">
+        <img ng-src="{{ProductImages.icon}}">
+      </label>
+      -->
+      
+      <label class="item item-divider">
+        Deal information
+      </label>
+      
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Deal type
+        </div>
+        <select ng-model="ProductMeta.productType">
+          <option selected value="local">Local</option>
+          <option value="online">Online</option>
+          <option value="voucher">Voucher</option>
+        </select>
+      </label>
+      
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Category
+        </div>
+        <select ng-model="ProductMeta.categoryId">
+          <option 
+              ng-selected="{{categoryKey == ProductMeta.categoryId}}"
+              ng-repeat="(categoryKey, categoryObj) in Categories" 
+              value="{{categoryKey}}">
+              {{categoryObj.title}}
+          </option>
+        </select>
+      </label>
+      
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">
+          Tags
+        </span>
+        <input 
+          ng-model="ProductMeta.tagsString"
+          type="text" placeholder="Comma seperated (for example: car, insurance, ...)">
+      </label>
+      
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Title</span>
+        <input 
+          ng-model="ProductMeta.title"
+          type="text" placeholder="">
+      </label>
+      
+      
+      <label class="item item-divider" ng-show="ProductMeta.productType">
+        Deal Terms
+      </label>
+      
+      <!-- deal terms -->
+      <div ng-switch="ProductMeta.productType">
+        
+          <div ng-switch-when='local'>
+              <submit-deal-local></submit-deal-local>
+          </div>
+          <div ng-switch-when='online'>
+              <submit-deal-online></submit-deal-online>
+          </div>
+          <div ng-switch-when='voucher'>
+              <submit-deal-voucher></submit-deal-voucher>
+          </div>
+      </div>
+      <!-- // deal terms -->
+
+      <label class="item item-input item-stacked-label" ng-show="ProductMeta.productType">
+        <span class="input-label">Deal ends</span>
+        <input 
+          ng-model="ProductMeta.date_end_raw"
+          type="date" placeholder="Deal ends">
+      </label>
+      
+      <label class="item item-input">
+        <textarea 
+          ng-model="ProductMeta.description"
+          rows="4" 
+          placeholder="Optional description"></textarea>
+      </label>
+
+    </div>
+
+    
+    <div class="center error-messages" ng-show="!status['containsNoError']">
+       <p>{{ErrorMessages['productType']}}</p>
+       <p>{{ErrorMessages['categoryId']}}</p>
+       <p>{{ErrorMessages['tagsString']}}</p>
+       <p>{{ErrorMessages['title']}}</p>
+       <p>{{ErrorMessages['location']}}</p>
+       
+       <p>{{ErrorMessages['price_old']}}</p>
+       <p>{{ErrorMessages['price_now']}}</p>
+       <p>{{ErrorMessages['voucher_link']}}</p>
+       <p>{{ErrorMessages['web_link']}}</p>
+       
+       <p>{{ErrorMessages['date_end_raw']}}</p>
+    </div>
+    
+    <div>
+      <button class="button button-block button-positive" ng-click="submitForm()">Submit</button>
+    </div>
+    
     
   </ion-content>
 </ion-view>
+<canvas id="canvas9" style="display: none !important;"></canvas>

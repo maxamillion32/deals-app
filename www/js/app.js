@@ -45,6 +45,10 @@ angular.module('starter', [
   'starter.controllers-live',
   'starter.services-products',
   
+  // submit management
+  'starter.controllers-submit',
+  'starter.services-categories',
+  
   // cordova
   'starter.services-cordova-camera',
   
@@ -163,13 +167,10 @@ angular.module('starter', [
   })
   
   .state('submit', {
-    url: '/submit',
+    url: '/submit/:productId',
     templateUrl: 'templates/submit.html',
-    controller: 'AppCtrl'
+    controller:'SubmitCtrl',
   });
-  
-  
-  
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/redirect');

@@ -15,7 +15,7 @@
     <!-- ** todo ** featured banner -->
       <div ng-init="loadFeaturedItems('live')" ng-show="!status.loading['featured']">
           <ion-slide-box>
-            <ion-slide ng-repeat="item in FeaturedProductsMeta['live']">
+            <ion-slide ng-repeat="item in FeaturedProductsMeta['live'] | orderBy: '-value.timestamp_creation'">
               
               <featured-card></featured-card>
               
@@ -41,8 +41,9 @@
         </div>
         <div ng-switch-when="false">
           <ion-slide-box>
-            <ion-slide ng-repeat="slideCount in slideRepeat[productType] | orderBy: sortType">
-
+            <ion-slide ng-repeat="slideCount in slideRepeat[productType]">
+              
+              {{slideCount.index}}
               <item-card></item-card>
 
             </ion-slide>

@@ -2,17 +2,17 @@
   <div class="col col-50">
     
     <!-- custom item card -->
-    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 0 + slideCount].value.title">
+    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 0 + slideCount.iter].value.title">
       
-      <img ng-src="{{getProductImage(ProductsMeta[productType][$index + 0 + slideCount].key)}}">
+      <img ng-src="{{getProductIcon(ProductsMeta[productType][$index + 0 + slideCount.iter].key)}}">
         
       <h2>
-          {{ProductsMeta[productType][$index + 0 + slideCount].value.title}}  
+          {{ProductsMeta[productType][$index + 0 + slideCount.iter].value.title}}  
       </h2>
       
       <span id="price">
-        <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_old}}</span>
-        <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_now}}</span>
+        <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
+        <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
       </span>
       
       <span id="save">
@@ -27,17 +27,17 @@
   <div class="col col-50">
     
     <!-- custom item card -->
-    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 1 + slideCount].value.title">
+    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 1 + slideCount.iter].value.title">
       
-      <img ng-src="{{getProductImage(ProductsMeta[productType][$index + 1 + slideCount].key)}}">
+      <img ng-src="{{getProductIcon(ProductsMeta[productType][$index + 1 + slideCount.iter].key)}}">
         
       <h2>
-          {{ProductsMeta[productType][$index + 1 + slideCount].value.title}}  
+          {{ProductsMeta[productType][$index + 1 + slideCount.iter].value.title}}  
       </h2>
       
       <span id="price">
-        <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount].value.price_old}}</span>
-        <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount].value.price_now}}</span>
+        <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
+        <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
       </span>
       
       <span id="save">

@@ -25,6 +25,22 @@ angular.module('starter.directives-templates', [])
   };
 })
 
+.directive('submitDealLocal', function() {
+  return {
+    templateUrl: 'templates/directives/submit-deal-local.html'
+  };
+})
+.directive('submitDealOnline', function() {
+  return {
+    templateUrl: 'templates/directives/submit-deal-online.html'
+  };
+})
+.directive('submitDealVoucher', function() {
+  return {
+    templateUrl: 'templates/directives/submit-deal-voucher.html'
+  };
+})
+
 .directive('backImg', function(){
     return function(scope, element, attrs){
         var url = attrs.backImg;

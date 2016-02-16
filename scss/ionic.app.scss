@@ -25,6 +25,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // -------------------------------
 $greylight:                           #f2f2f2 !default;
 $positive:                            #F6D127 !default;
+$assertive:                           #ef473a !default;
 
 // Base
 // -------------------------------
@@ -87,6 +88,7 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
 .input-label {
     width: 100% !important;
     text-align: left !important;
+    font-weight: 600 !important;
 }
 
 
@@ -111,6 +113,7 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
 .custom-item-card { 
    height: 200px;
    width: 100%;
+   height: auto;
    margin: auto;
    position: relative; 
    background: rgba(0,0,0,0.8);
@@ -205,6 +208,9 @@ h1#category-title {
     margin: 0px !important;
     padding: 0px !important;
     font-weight: 600;
+}
+.error-messages {
+    color: $assertive;
 }
 
 

@@ -33,20 +33,15 @@ angular.module('starter.controllers-redirect', [])
 
   // fn0: is the user authenticated?
   function checkState() {
-    $scope.AuthData = Auth.AuthData;
-    if(!$scope.AuthData.hasOwnProperty('uid')){
-      Auth.getAuthState().then(
-        function(AuthData){
-          $scope.AuthData = AuthData;
-          handleLoggedIn();
-        },
-        function(notLoggedIn){
-          handleLoggedOut();
-        }
-      )
-    } else {
-      handleLoggedIn();
-    };
+    Auth.getAuthState().then(
+      function(AuthData){
+        $scope.AuthData = AuthData;
+        handleLoggedIn();
+      },
+      function(notLoggedIn){
+        handleLoggedOut();
+      }
+    )
   }; // ./ checkAuth()
 
   function handleLoggedIn() {

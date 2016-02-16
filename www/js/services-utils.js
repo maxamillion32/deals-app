@@ -3,7 +3,7 @@ angular.module('starter.services-utils', [])
 /**
  * All other complementary functions
  */
-.factory('Utils', function($ionicLoading, $timeout) {
+.factory('Utils', function($ionicLoading, $timeout, $q) {
   var self = this;
 
   //
@@ -72,13 +72,14 @@ angular.module('starter.services-utils', [])
     );
   };
 
-  self.sortArray = function(targetObject, sortOptions) {
-    console.log(targetObject)
+  self.sortArray = function(targetObject, sortMethod, sortProperty) {
+    /**
     var sortProperty = sortOptions.property.toLowerCase();
     if(sortProperty == 'date') {
       sortProperty = "timestamp_creation";
     }
-    switch(sortOptions.method){
+    */
+    switch(sortMethod){
       case 'asc':
         //
         return targetObject.sort(compareDesc);
@@ -89,9 +90,8 @@ angular.module('starter.services-utils', [])
       break
     }
     function compareDesc(a,b) {
-        a = a['value'];
-        b = b['value'];
-        console.log(a, b)
+        a = a['index'];
+        b = b['index'];
         if (a[sortProperty] < b[sortProperty])
             return -1;
         else if (a[sortProperty] > b[sortProperty])
@@ -100,8 +100,8 @@ angular.module('starter.services-utils', [])
             return 0;
     };
     function compareAsc(a,b) {
-        a = a['value'];
-        b = b['value'];
+        a = a['index'];
+        b = b['index'];
         if (a[sortProperty] > b[sortProperty])
             return -1;
         else if (a[sortProperty] < b[sortProperty])
@@ -116,7 +116,9 @@ angular.module('starter.services-utils', [])
     var nbSlides = Math.ceil(ProductMeta.length/2);
     var indexArray = [];
     for(var i=0; i<nbSlides; i++) {
-      indexArray[i] = i;
+      indexArray[i] = {
+        iter: i
+      };
     };
     return indexArray;
   };
@@ -179,6 +181,96 @@ angular.module('starter.services-utils', [])
   
   self.genRandomName = function() {
     return 'smart-user' + Math.floor(Math.random()*10000000000);
+  };
+  
+  
+  self.alphaNumeric = function(input){
+      if(input != undefined && input != null) {
+          return input.replace(/[^a-z0-9]/gi,'_').toLowerCase().trim();
+      } else {
+          return "nothing";
+      }
+  };
+    
+  self.alphaNumericWide = function(input){
+      if(input != undefined && input != null) {
+          return input.replace(/[^a-z0-9]/gi,' ').toLowerCase().trim();
+      } else {
+          return "nothing";
+      }
+  };
+  
+  // resize base64 strings based on their target w and h
+  // use an offscreen canvas for enhanced rendering
+  self.resizeImageSoft = function(canvasName, base64, targetWidth, targetHeight) {
+      
+      var qResize = $q.defer();
+      
+      var img = new Image;
+      img.onload = resizeImage;
+      //img.src = base64ToDataUri(base64);
+      img.src = base64;
+      
+      function resizeImage() {
+          imageToDataUri(this, targetWidth, targetHeight);
+      }
+      
+      function base64ToDataUri(base64) {
+          return 'data:image/png;base64,' + base64;
+      }
+      
+      function imageToDataUri(img, targetWidth, targetHeight) {
+
+          var canvas = document.getElementById(canvasName);;
+          var ctx = canvas.getContext('2d');
+          
+          var dd = scaleDimensions(img.width, img.height, targetWidth, targetHeight);
+          
+          /**
+           * no rescaling
+          canvas.width = img.width = dd.iw;
+          canvas.height = img.height = dd.ih;
+          */
+          canvas.width = targetHeight;
+          canvas.height = targetHeight;
+          
+          console.log(img.height, img.width)
+          console.log(targetHeight, targetHeight)
+          
+          var perc14 = Math.floor(img.width/4);
+          console.log(perc14)
+          
+          ctx.drawImage(img, perc14, 0, targetHeight, img.height, 0, 0, targetHeight, targetHeight);
+
+          //ctx.drawImage(img, 0, 0, targetHeight, targetHeight);
+          
+          if(canvasName == "canvas0") { // "icon"
+              qResize.resolve(canvas.toDataURL());
+          } else {
+              qResize.resolve(canvas.toDataURL("image/jpeg", 1));
+          }
+          
+      }
+      
+      function scaleDimensions(imgWidth, imgHeight, targetWidth, targetHeight) {
+          var scaleFactor = 1;
+          var dd = {iw: imgWidth, ih: imgHeight};
+          if (imgWidth < targetWidth && imgHeight < targetHeight) {
+              scaleFactor = 1; // do not scale
+          } else {
+              if (imgWidth > imgHeight){
+                  scaleFactor = targetWidth/imgWidth;
+              } else {
+                  scaleFactor = targetHeight/imgHeight;
+              }
+          }
+          dd["iw"] = Math.floor(imgWidth*scaleFactor);
+          dd["ih"] = Math.floor(imgHeight*scaleFactor);
+          
+          return dd;
+      }
+      
+      return qResize.promise;
   };
   
 

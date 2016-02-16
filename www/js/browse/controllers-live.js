@@ -25,34 +25,32 @@ angular.module('starter.controllers-live', [])
   });
   
   $scope.doRefresh = function() {
-    $scope.loadLatest('local');
-    $scope.loadLatest('online');
-    $scope.loadLatest('voucher');
-    $scope.loadFeaturedItems('live');
+    $scope.loadLatest('local', false);
+    $scope.loadLatest('online', false);
+    $scope.loadLatest('voucher', false);
+    $scope.loadFeaturedItems('live', false);
   };
-  
-  
+
   $scope.slideRepeat = {};
   $scope.ProductsMeta = {};
   $scope.ProductsImage = {};
   
   // fn latest
-  $scope.loadLatest = function(productType) {
-    $scope.status['loading'][productType] = true;
-    Products.filter('productType', productType, 'timestamp_update', LIMITVALUE).then(
+  $scope.loadLatest = function(productType, optHide) {
+    if(optHide == undefined || optHide != false) {  // prevent flickering
+      $scope.status['loading'][productType] = true;
+    };
+    Products.filter('productType', productType, 'timestamp_update', 20).then(
       function(ProductsMeta){ 
         // Init view
         if(ProductsMeta != null) {
           
-            $scope.ProductsMeta[productType] = Utils.arrayValuesAndKeysProducts(ProductsMeta);
-            $scope.slideRepeat[productType] = Utils.prepareSlideRepeat($scope.ProductsMeta[productType]);
+            $scope.ProductsMeta[productType]  = Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), 'desc', 'timestamp_creation');
+            $scope.slideRepeat[productType]   = Utils.prepareSlideRepeat($scope.ProductsMeta[productType]);
             
             $scope.status['loading'][productType] = false;
             $scope.$broadcast('scroll.refreshComplete');
             $ionicSlideBoxDelegate.update();
-            
-            
-            console.log('done', productType)
             
             // @dependency
             loadProductsImage(ProductsMeta)
@@ -81,6 +79,11 @@ angular.module('starter.controllers-live', [])
       return $scope.ProductsImage[productId].screenshot1;
     }
   };
+  $scope.getProductIcon = function(productId) {
+    if($scope.ProductsImage.hasOwnProperty(productId)) {
+      return $scope.ProductsImage[productId].icon;
+    }
+  };
   
   
   
@@ -103,11 +106,10 @@ angular.module('starter.controllers-live', [])
   // ---------------------------------------------------------------------------
   
   $scope.FeaturedProductsMeta = {};
-  $scope.loadFeaturedItems = function(screenView) {
-    $scope.status['loading']['featured'] = true;
-    
-    console.log('loadFeaturedItems')
-    
+  $scope.loadFeaturedItems = function(screenView, optHide) {
+    if(optHide == undefined || optHide != false) {  // prevent flickering
+      $scope.status['loading']['featured'] = true;
+    };
     Products.getFeaturedProductMeta(screenView).then(
       function(FeaturedProductsMeta){ 
         if(FeaturedProductsMeta != null) {
@@ -117,10 +119,9 @@ angular.module('starter.controllers-live', [])
           $scope.status['loading']['featured'] = false;
           $scope.$broadcast('scroll.refreshComplete');
           $ionicSlideBoxDelegate.update();
-            
-          loadProductsImage(FeaturedProductsMeta);
           
-          console.log('loadFeaturedItems', $scope.FeaturedProductsMeta)
+          // @dependency
+          loadProductsImage(FeaturedProductsMeta);
           
         } else {
           $scope.status['loading']['featured'] = null;

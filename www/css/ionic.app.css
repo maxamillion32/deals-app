@@ -61,7 +61,8 @@ $greylight: #f2f2f2
 
 .input-label {
   width: 100% !important;
-  text-align: left !important; }
+  text-align: left !important;
+  font-weight: 600 !important; }
 
 .profile img {
   height: 150px;
@@ -73,6 +74,7 @@ $greylight: #f2f2f2
 .custom-item-card {
   height: 200px;
   width: 100%;
+  height: auto;
   margin: auto;
   position: relative;
   background: rgba(0, 0, 0, 0.8); }
@@ -152,6 +154,9 @@ h1#category-title {
   margin: 0px !important;
   padding: 0px !important;
   font-weight: 600; }
+
+.error-messages {
+  color: #ef473a; }
 
 .center {
   text-align: center; }
