@@ -53,7 +53,7 @@ angular.module('starter.controllers-live', [])
             $ionicSlideBoxDelegate.update();
             
             // @dependency
-            loadProductsImage(ProductsMeta)
+            loadProductsIcons(ProductsMeta)
         } else {
             $scope.status['loading'][productType] = null;
         };
@@ -87,9 +87,20 @@ angular.module('starter.controllers-live', [])
   
   
   
-  function loadProductsImage(ProductsMeta) {
+  function loadProductsIcons(ProductsMeta) {
     angular.forEach(ProductsMeta, function(value, productId){
-      Products.getProductScreenshots(productId).then(
+      Products.getProductIcon(productId).then(
+        function(ProductImages){
+          if(ProductImages != null) {
+            $scope.ProductsImage[productId] = ProductImages;
+          }
+        }
+      )
+    })
+  };
+  function loadProductsScreenshots(ProductsMeta) {
+    angular.forEach(ProductsMeta, function(value, productId){
+      Products.getProductIconLarge(productId).then(
         function(ProductImages){
           if(ProductImages != null) {
             $scope.ProductsImage[productId] = ProductImages;
@@ -115,13 +126,14 @@ angular.module('starter.controllers-live', [])
         if(FeaturedProductsMeta != null) {
           
           $scope.FeaturedProductsMeta[screenView] = Utils.arrayValuesAndKeysProducts(FeaturedProductsMeta);
+          console.log($scope.FeaturedProductsMeta)
           
           $scope.status['loading']['featured'] = false;
           $scope.$broadcast('scroll.refreshComplete');
           $ionicSlideBoxDelegate.update();
           
           // @dependency
-          loadProductsImage(FeaturedProductsMeta);
+          loadProductsScreenshots(FeaturedProductsMeta);
           
         } else {
           $scope.status['loading']['featured'] = null;

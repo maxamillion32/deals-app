@@ -169,7 +169,22 @@ angular.module('starter.services-products', [])
         var ref = new Firebase(FBURL);
         //
         ref.child("products_images").child(productId).child("icon").on("value", function(snapshot) {
-            qIcon.resolve(snapshot.val());
+            qIcon.resolve({
+                icon: snapshot.val()
+            });
+        }, function (errorObject) {
+            qIcon.reject(errorObject);
+        });
+        return qIcon.promise;
+    };
+    self.getProductIconLarge = function(productId) {
+        var qIcon = $q.defer();
+        var ref = new Firebase(FBURL);
+        //
+        ref.child("products_images").child(productId).child("screenshot1").on("value", function(snapshot) {
+            qIcon.resolve({
+                screenshot1: snapshot.val()
+            });
         }, function (errorObject) {
             qIcon.reject(errorObject);
         });
@@ -229,6 +244,7 @@ angular.module('starter.services-products', [])
         var ref = new Firebase(FBURL);
         ref.child("featured").child(subNode).on("value", function(snapshot) {
             var ProductList = snapshot.val();
+            
             if(ProductList != null) {
                 qFea.resolve(ProductList);
             } else {
@@ -288,13 +304,14 @@ angular.module('starter.services-products', [])
                 self.getProductMeta(productId).then(
                     function(ProductMeta){
                         // --> resolve
+                        console.log(ProductMeta)
                         if(ProductMeta != null) {
                             qGet.resolve({
                                 meta: ProductMeta,
                                 index: latestIndexValues
                             });
                         } else {
-                            qGet.resolve(null);
+                            qGet.reject(null);
                         }
                     },
                     function(error){
@@ -329,7 +346,7 @@ angular.module('starter.services-products', [])
  *      brother of Products
  *      encompasses submit, edit and delete of products
  */
-.factory('ProductManagement', function($q, $http, Utils) {
+.factory('ProductManagement', function($q, $http, Utils, Codes) {
     var self = this;
     
     /**
@@ -349,15 +366,16 @@ angular.module('starter.services-products', [])
         var NEW_PATHS = Object.keys(PATH_DATA);
         PATH_DATA["/products_tags/paths/all/" + productId] = NEW_PATHS;
         
-        console.log(PATH_DATA)
-        
         // synchronize
+        Utils.showMessage('Adding...');
         var onComplete = function(error) {
             if (error) {
                 console.log("Error updating data:", error);
+                Codes.handleError(error);
                 qSubmit.reject(error)
             } else {
                 //console.log("success")
+                Utils.showMessage('Success!', 1500)
                 qSubmit.resolve(productId);
             }
         };
@@ -375,6 +393,7 @@ angular.module('starter.services-products', [])
         var qEdit = $q.defer();
         
         // only when in edit or delete mode: get the latest paths and index values
+        Utils.showMessage('Preparing...');
         getEDIT_DATA(productId).then(
             function(EDIT_DATA){
                 if(EDIT_DATA != null & EDIT_DATA != undefined
@@ -415,12 +434,15 @@ angular.module('starter.services-products', [])
             NEW_PATH_DATA = checkOverlapPATH_DATA(NEW_PATHS, OLD_PATHS, NEW_PATH_DATA);
             
             // synchronize
+            Utils.showMessage('Saving...');
             var onComplete = function(error) {
                 if (error) {
                     console.log("Error updating data:", error);
+                    Codes.handleError(error);
                     qEdit.reject(error)
                 } else {
                     //console.log("success")
+                    Utils.showMessage('Done!', 1500);
                     qEdit.resolve("UPDATE_PRODUCTS_TAGS_SUCCESS")
                 }
             };

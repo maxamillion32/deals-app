@@ -41,6 +41,12 @@ angular.module('starter.directives-templates', [])
   };
 })
 
+.directive('customMenuItems', function() {
+  return {
+    templateUrl: 'templates/directives/custom-menu-items.html'
+  };
+})
+
 .directive('backImg', function(){
     return function(scope, element, attrs){
         var url = attrs.backImg;

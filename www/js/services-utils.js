@@ -244,11 +244,7 @@ angular.module('starter.services-utils', [])
 
           //ctx.drawImage(img, 0, 0, targetHeight, targetHeight);
           
-          if(canvasName == "canvas0") { // "icon"
-              qResize.resolve(canvas.toDataURL());
-          } else {
-              qResize.resolve(canvas.toDataURL("image/jpeg", 1));
-          }
+          qResize.resolve(canvas.toDataURL("image/jpeg", 1));
           
       }
       

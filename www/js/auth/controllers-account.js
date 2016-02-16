@@ -32,7 +32,7 @@ angular.module('starter.controllers-account', [])
 
   $scope.$on('$ionicView.enter', function(e) {
     
-    if($state.current.name == 'account') {
+    if($state.current.name == 'other.account') {
       checkAuth();
     } else {
       handleIntro();
@@ -82,7 +82,7 @@ angular.module('starter.controllers-account', [])
   // handles when the user is logged out
   function handleLoggedOut() {
     
-    if($state.current.name == 'account') {
+    if($state.current.name == 'other.account') {
       openLogin();
       // if for some reason the modals are not automatically opened, show a button
       $timeout(function(){
@@ -201,7 +201,7 @@ angular.module('starter.controllers-account', [])
     // handle logged in
     $scope.AuthData = AuthData;
     console.log('proceedLogin', $state.current.name)
-    if ($state.current.name == 'account') {
+    if ($state.current.name == 'other.account') {
       handleLoggedIn();
     } else {
       $scope.status['mode'] = 1;
@@ -458,12 +458,9 @@ angular.module('starter.controllers-account', [])
       Profile.get($scope.AuthData.uid).then(
         function(ProfileData) {
           
-          console.log(ProfileData)
-          
           // bind to scope
           if(ProfileData != null) {
             $scope.ProfileData = ProfileData;
-            
             
             if($scope.ProfileData.hasOwnProperty('other')) {
               $scope.OtherData = $scope.ProfileData.other;
@@ -659,8 +656,8 @@ angular.module('starter.controllers-account', [])
       disableBack: true
     });
     
-    if($state.current.name == 'account') {
-      $state.go('account');
+    if($state.current.name == 'other.account') {
+      $state.go('other.account');
     } else {
       $state.go('app.live');
     }

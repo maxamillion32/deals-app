@@ -101,6 +101,7 @@ angular.module('starter', [
   
   $stateProvider
   
+  // redirect and intro
   .state('redirect', {
     url: '/redirect',
     templateUrl: 'templates/redirect.html',
@@ -112,36 +113,57 @@ angular.module('starter', [
     templateUrl: 'templates/intro.html',
     controller: 'AccountCtrl'
   })
-  
-  // settings
-  .state('account', {
-    url: '/account',
-    templateUrl: 'templates/auth/account.html',
-    controller: 'AccountCtrl'
+
+  // settings and other
+  .state('other', {
+    url: '/other',
+    abstract: true,
+    templateUrl: 'templates/menu-other.html',
+    controller: 'AppCtrl'
   })
   
-  .state('search', {
-    url: '/search',
+  .state('other.account', {
+    url: '/account',
     views: {
-      'tab-search': {
-        templateUrl: 'templates/live.html',
-        controller: 'LiveCtrl'
+      'menuContent': {
+        templateUrl: 'templates/auth/account.html',
+        controller: 'AccountCtrl'
       }
     }
   })
   
-  // browsing views
+
+  .state('other.submit', {
+    url: '/submit/:productId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/submit.html',
+        controller:'SubmitCtrl',
+        resolve: {authResolve: authResolve}
+      }
+    }
+  })
+  
+  .state('other.search', {
+    url: '/search',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/search.html',
+      }
+    }
+  })
+  
+  // browsing states
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/tabs.html',
+    templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-  
   .state('app.live', {
     url: '/live',
     views: {
-      'tab-live': {
+      'app-live': {
         templateUrl: 'templates/live.html',
         controller: 'LiveCtrl'
       }
@@ -150,7 +172,7 @@ angular.module('starter', [
   .state('app.trending', {
     url: '/trending',
     views: {
-      'tab-trending': {
+      'app-trending': {
         templateUrl: 'templates/trending.html',
         controller: 'LiveCtrl'
       }
@@ -159,18 +181,16 @@ angular.module('starter', [
   .state('app.wallet', {
     url: '/wallet',
     views: {
-      'tab-wallet': {
+      'app-wallet': {
         templateUrl: 'templates/wallet.html',
-        controller: 'LiveCtrl'
+        controller: 'LiveCtrl',
+        resolve: {authResolve: authResolve}
       }
     }
   })
   
-  .state('submit', {
-    url: '/submit/:productId',
-    templateUrl: 'templates/submit.html',
-    controller:'SubmitCtrl',
-  });
+  
+  
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/redirect');

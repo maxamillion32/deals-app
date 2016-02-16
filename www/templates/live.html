@@ -1,10 +1,9 @@
 <ion-view view-title="Live">
+  
 
   
-  
-</ion-header-bar>
 
-  <ion-content class="center grey">
+  <ion-content class="center grey" has-header="true" has-tabs="true" has-subheader="true">
     
     <ion-refresher
       pulling-text="Pull to refresh..."
@@ -54,7 +53,10 @@
     </div>
     
   </ion-content>
-  <button class="button button-float" ng-click="goTo('submit')">
+  <button class="button button-float" ng-click="goTo('other.submit')">
     <i class="icon ion-plus"></i>
   </button>
+  
+  
 </ion-view>
+
