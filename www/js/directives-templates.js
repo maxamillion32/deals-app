@@ -24,3 +24,21 @@ angular.module('starter.directives-templates', [])
     templateUrl: 'templates/directives/featured-card.html'
   };
 })
+
+.directive('backImg', function(){
+    return function(scope, element, attrs){
+        var url = attrs.backImg;
+        console.log(url)
+        element.css({
+            'background': 'url(' + url +')',
+            'background-size' : 'cover'
+        });
+        
+        scope.$watch("backImg", function(value) {
+          element.css({
+            'background': 'url(' + url +')',
+            'background-size' : 'cover'
+          });
+        })
+    };
+});

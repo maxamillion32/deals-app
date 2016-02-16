@@ -25,12 +25,9 @@ angular.module('starter.controllers-live', [])
   });
   
   $scope.doRefresh = function() {
-    
-    
     $scope.loadLatest('local');
     $scope.loadLatest('online');
     $scope.loadLatest('voucher');
-    
   };
   
   

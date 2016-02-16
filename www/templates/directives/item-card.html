@@ -1,66 +1,51 @@
 <div class="row">
   <div class="col col-50">
-
-    <!-- item card start -->
-    <div class="list card" ng-show="ProductsMeta[productType][$index + 0 + slideCount].value.title">
     
+    <!-- custom item card -->
+    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 0 + slideCount].value.title">
       
-    
-      <a class="item item-image" href="" 
-        ng-click="goToItem(ProductsMeta[productType][$index + 0 + slideCount].key)" 
-        ng-show="getProductImage(ProductsMeta[productType][$index + 0 + slideCount].key)">
-        <img class="thumbnail-card" 
-          ng-src="{{getProductImage(ProductsMeta[productType][$index + 0 + slideCount].key)}}">
-      </a>
+      <img ng-src="{{getProductImage(ProductsMeta[productType][$index + 0 + slideCount].key)}}">
+        
+      <h2>
+          {{ProductsMeta[productType][$index + 0 + slideCount].value.title}}  
+      </h2>
+      
+      <span id="price">
+        <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_old}}</span>
+        <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_now}}</span>
+      </span>
+      
+      <span id="save">
+        <a href="" ng-click="doSomething()" class="ion-ios-star-outline"></a>
+      </span>
 
-      <a class="item item-text-wrap">
-        <p>
-          <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_old}}</span>
-          <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount].value.price_now}}</span>
-        </p>
-      </a>
-      
-      <div class="item item-text-wrap">
-        <h2>
-          {{ProductsMeta[productType][$index + 0 + slideCount].value.title}}
-        </h2>
-      </div>
-      
     </div>
-    <!-- ./ item card end -->
-    
-    
+    <!-- // custom item card -->
+
     
   </div>
   <div class="col col-50">
     
-    <!-- item card start -->
-    <div class="list card" ng-show="ProductsMeta[productType][$index + 1 + slideCount].value.title">
-    
+    <!-- custom item card -->
+    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 1 + slideCount].value.title">
       
-    
-      <a class="item item-image" href="" 
-        ng-click="goToItem(ProductsMeta[productType][$index + 1 + slideCount].key)" 
-        ng-show="getProductImage(ProductsMeta[productType][$index + 1 + slideCount].key)">
-        <img class="thumbnail-card" 
-          ng-src="{{getProductImage(ProductsMeta[productType][$index + 1 + slideCount].key)}}">
-      </a>
+      <img ng-src="{{getProductImage(ProductsMeta[productType][$index + 1 + slideCount].key)}}">
+        
+      <h2>
+          {{ProductsMeta[productType][$index + 1 + slideCount].value.title}}  
+      </h2>
       
-      <a class="item">
+      <span id="price">
         <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount].value.price_old}}</span>
-          <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount].value.price_now}}</span>
-      </a>
+        <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount].value.price_now}}</span>
+      </span>
       
-      <div class="item item-text-wrap">
-        <h2>
-          {{ProductsMeta[productType][$index + 1 + slideCount].value.title}}
-        </h2>
-      </div>
+      <span id="save">
+        <a href="" ng-click="doSomething()" class="ion-ios-star-outline"></a>
+      </span>
 
-      
-    
     </div>
-    <!-- ./ item card end -->
+    <!-- // custom item card -->
     
   </div>
 </div>

@@ -70,11 +70,55 @@ $greylight: #f2f2f2
   margin-top: 30px;
   margin-bottom: 20px; }
 
-img.thumbnail-card {
-  max-height: 150px;
+.custom-item-card {
+  height: 200px;
   width: 100%;
-  height: auto;
-  margin: auto; }
+  margin: auto;
+  position: relative;
+  background: rgba(0, 0, 0, 0.8); }
+
+.custom-item-card img {
+  height: 200px;
+  width: 100%;
+  position: relative; }
+
+.custom-item-card #price {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 5px; }
+
+.custom-item-card #save {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  text-align: right;
+  padding-right: 10px;
+  padding-top: 5px;
+  font-size: 28px; }
+
+.custom-item-card h2 {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  color: #fff;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  font-size: 14px;
+  margin: 0px;
+  width: 100%; }
+
+span.old-price {
+  color: red;
+  text-decoration: line-through; }
+
+span.offer-value {
+  color: green; }
 
 .row {
   margin: 0px !important;
@@ -108,13 +152,6 @@ h1#category-title {
   margin: 0px !important;
   padding: 0px !important;
   font-weight: 600; }
-
-span.old-price {
-  color: red;
-  text-decoration: line-through; }
-
-span.offer-value {
-  color: green; }
 
 .center {
   text-align: center; }
