@@ -269,6 +269,23 @@ angular.module('starter.services-utils', [])
       return qResize.promise;
   };
   
+  self.formatSearchResults = function(ProductsMeta) {
+    // prepare
+    var ProductsMetaTemp = {};
+    angular.forEach(ProductsMeta, function(value, keyQuery){
+        angular.forEach(ProductsMeta[keyQuery], function(value, productId){
+            if(value != null) {
+                ProductsMetaTemp[productId] = value;
+            }
+        })
+    })
+    // process
+    if(Object.keys(ProductsMetaTemp).length == 0) {
+      return null
+    } else {
+      return self.arrayValuesAndKeysProducts(ProductsMetaTemp);
+    }
+  };
 
   return self;
 })

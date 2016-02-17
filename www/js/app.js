@@ -44,6 +44,7 @@ angular.module('starter', [
   // browsing
   'starter.controllers-live',
   'starter.controllers-wallet',
+  'starter.controllers-search',
   'starter.controllers-submissions',
   'starter.services-products',
   
@@ -158,10 +159,11 @@ angular.module('starter', [
   })
   
   .state('other.search', {
-    url: '/search',
+    url: '/search/:q',
     views: {
       'menuContent': {
         templateUrl: 'templates/search.html',
+        controller: 'SearchCtrl'
       }
     }
   })

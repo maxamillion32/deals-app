@@ -1,10 +1,10 @@
-angular.module('starter.controllers-wallet', [])
+angular.module('starter.controllers-search', [])
 
 // Upon entering the app, this controller checks whether
 // 1. user is authenticated
 // 2. if authenticated, has filled in intro-settings
-.controller('WalletCtrl', function(
-  $scope, $state,
+.controller('SearchCtrl', function(
+  $scope, $state, $stateParams,
   Auth, Products, Utils, Wallet) {
 
   // ----
@@ -15,64 +15,60 @@ angular.module('starter.controllers-wallet', [])
 
   // communicates with the DOM
   $scope.status = {
-    loading: true,
+    loading: false,
+    sortMethod: 'timestamp_creation',
+    q: $stateParams.q
   };
 
   $scope.$on('$ionicView.enter', function(e) {
     $scope.AuthData = Auth.AuthData;
-    $scope.loadWalletMeta();
-    console.log('in')
+    $scope.status['q'] = $stateParams.q;
+    $scope.search();
+    loadWallet();
   });
-  
-  $scope.doRefresh = function() {
-    $scope.loadWalletMeta();
-  };
 
   $scope.ProductsMeta = {};
-  $scope.ProductsImage = {};
+  $scope.ProductsIcons = {};
+  $scope.ProductsScreenshots = {};
   
   // fn latest
-  $scope.loadWalletMeta = function() {
+  $scope.search = function() {
     $scope.status['loading'] = true;
-    
-    if($scope.AuthData.hasOwnProperty('uid')) {
-      
-      Wallet.getProductsMeta($scope.AuthData.uid).then(
+    if($scope.status['q']) {
+      Products.search($scope.status['q'], 25).then(  // shows only last 25
         function(ProductsMeta){ 
           console.log(ProductsMeta)
           if(ProductsMeta != null) {
-            
-              $scope.ProductsMeta  = Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), 'desc', 'timestamp_creation');
+              
+              $scope.ProductsMeta  = Utils.formatSearchResults(ProductsMeta); //Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), 'desc', $scope.status['sortMethod']);
               $scope.status['loading'] = false;
-              $scope.$broadcast('scroll.refreshComplete');
               
+              console.log($scope.ProductsMeta)
+  
               // @dependency
-              loadProductsIcons(ProductsMeta)
-              bindWalletList(ProductsMeta);
-              
+              loadProductsScreenshots_Adj($scope.ProductsMeta)
           } else {
               $scope.status['loading'] = null;
-              $scope.$broadcast('scroll.refreshComplete');
           };
         },
         function(error){
-          console.log(error)
           if(error == null) {
               $scope.status['loading'] = null;
-              $scope.$broadcast('scroll.refreshComplete');
           } else {
               $scope.status['loading'] = false;
-              $scope.$broadcast('scroll.refreshComplete');
           }
+          console.log(error)
         }
-      );
-      
+      ) // .search()
     } else {
-      $scope.status['loading'] ='signed-out';
-    }
-    
-    
+      $scope.status['loading'] = false;
+    } // if q
   };
+  
+  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
     
   // custom functions to avoid Lexer error
   // https://docs.angularjs.org/error/$parse/lexerr?p0=Unterminated
@@ -80,39 +76,52 @@ angular.module('starter.controllers-wallet', [])
       return $scope.ProductsMeta[key];
   };
   $scope.getProductImage = function(productId) {
-    if($scope.ProductsImage.hasOwnProperty(productId)) {
-      return $scope.ProductsImage[productId].screenshot1;
+    if($scope.ProductsScreenshots.hasOwnProperty(productId)) {
+      return $scope.ProductsScreenshots[productId];
     }
   };
   $scope.getProductIcon = function(productId) {
-    if($scope.ProductsImage.hasOwnProperty(productId)) {
-      return $scope.ProductsImage[productId].icon;
+    if($scope.ProductsIcons.hasOwnProperty(productId)) {
+      return $scope.ProductsIcons[productId];
+    }
+  };
+  function loadProductsScreenshots_Adj(ProductsMeta) {
+    if(ProductsMeta != null) {
+      for(var i=0; i<ProductsMeta.length; i++) {
+        var productId = ProductsMeta[i].key;
+        Products.getProductIconLarge(productId).then(
+          function(ProductImages){
+            //
+            if(ProductImages != null && ProductImages != undefined) {
+              $scope.ProductsScreenshots[ProductImages.productId] = ProductImages.screenshot1;
+            }
+          }
+        )
+      }
     }
   };
   
-  function loadProductsIcons(ProductsMeta) {
-    angular.forEach(ProductsMeta, function(value, productId){
-      Products.getProductIcon(productId).then(
-        function(ProductImages){
-          if(ProductImages != null) {
-            $scope.ProductsImage[productId] = ProductImages;
+  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  
+  $scope.Wallet = {};
+  function loadWallet() {
+    if($scope.AuthData.hasOwnProperty('uid')) {
+      Wallet.getList($scope.AuthData.uid).then(
+        function(WalletList){
+          $scope.Wallet = WalletList;
+        },
+        function(error){
+          if(error != null) {
+            console.log(error);
           }
         }
       )
-    })
+    }
   };
-  
-  $scope.Wallet = {};
-  function bindWalletList(ProductsMeta) {
-    angular.forEach(ProductsMeta, function(value, productId){
-      $scope.Wallet[productId] = true;
-    })
-  };
-  
 
-  // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
   
   var tempPressed = false;
   $scope.walletButtonPressed = function(productId) {
@@ -148,6 +157,9 @@ angular.module('starter.controllers-wallet', [])
     } // end auth and tempPressed
   };
   
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   $scope.goTo = function(nextState) {
     $state.go(nextState)

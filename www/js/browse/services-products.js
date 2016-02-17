@@ -183,7 +183,8 @@ angular.module('starter.services-products', [])
         //
         ref.child("products_images").child(productId).child("screenshot1").on("value", function(snapshot) {
             qIcon.resolve({
-                screenshot1: snapshot.val()
+                screenshot1: snapshot.val(),
+                productId: productId
             });
         }, function (errorObject) {
             qIcon.reject(errorObject);
@@ -304,7 +305,7 @@ angular.module('starter.services-products', [])
                 self.getProductMeta(productId).then(
                     function(ProductMeta){
                         // --> resolve
-                        console.log(ProductMeta)
+                        //console.log(ProductMeta)
                         if(ProductMeta != null) {
                             qGet.resolve({
                                 meta: ProductMeta,

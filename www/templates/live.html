@@ -8,13 +8,12 @@
       on-refresh="doRefresh()">
     </ion-refresher>
     
-    <!-- ** todo ** featured banner -->
-      <div ng-init="loadFeaturedItems('live')" ng-show="!status.loading['featured']">
+    <!-- featured banner -->
+      <div>
           <ion-slide-box>
             <ion-slide ng-repeat="item in FeaturedProductsMeta['live'] | orderBy: '-value.timestamp_creation'">
               
               <featured-card></featured-card>
-              
    
             </ion-slide>
           </ion-slide-box>
@@ -31,7 +30,7 @@
       
 
       <!-- items per category -->
-      <div ng-init="loadLatest(productType)" ng-switch="status.loading[productType]">
+      <div ng-switch="status.loading[productType]">
         <div ng-switch-when="true" class="center">
           <ion-spinner icon="dots"></ion-spinner>
         </div>
@@ -39,7 +38,6 @@
           <ion-slide-box>
             <ion-slide ng-repeat="slideCount in slideRepeat[productType]">
               
-              {{slideCount.index}}
               <item-card></item-card>
 
             </ion-slide>

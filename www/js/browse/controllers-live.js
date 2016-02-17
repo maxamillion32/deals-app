@@ -16,12 +16,28 @@ angular.module('starter.controllers-live', [])
 
   // communicates with the DOM
   $scope.status = {
+    sortMethod: 'timestamp_creation',
     loading: {},
     mode: 0,  //0: signed out, 1: signed in (not set intro-settings)
   };
 
   $scope.$on('$ionicView.enter', function(e) {
+    
+    // define the state and sorting preference
+    console.log($state.current.name)
+    if ($state.current.name == 'app.live') {
+      $scope.status['sortMethod'] = 'upvotes_count';
+    } else {
+      $scope.status['sortMethod'] = 'timestamp_creation';
+    };
+    
+    // load the groups
+    $scope.loadLatest('local');
+    $scope.loadLatest('online');
+    $scope.loadLatest('voucher');
+    $scope.loadFeaturedItems('live');
     loadWallet();
+    
   });
   
   $scope.doRefresh = function() {
@@ -34,19 +50,21 @@ angular.module('starter.controllers-live', [])
 
   $scope.slideRepeat = {};
   $scope.ProductsMeta = {};
-  $scope.ProductsImage = {};
+  $scope.ProductsIcons = {};
+  $scope.ProductsScreenshots = {};
   
   // fn latest
   $scope.loadLatest = function(productType, optHide) {
+    //console.log('loading latest', productType, $scope.status['sortMethod'])
     if(optHide == undefined || optHide != false) {  // prevent flickering
       $scope.status['loading'][productType] = true;
     };
-    Products.filter('productType', productType, 'timestamp_update', 20).then(
+    // generic wrapper
+    Products.filter('productType', productType, $scope.status['sortMethod'], 25).then(  // shows only last 25
       function(ProductsMeta){ 
-        // Init view
         if(ProductsMeta != null) {
           
-            $scope.ProductsMeta[productType]  = Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), 'desc', 'timestamp_creation');
+            $scope.ProductsMeta[productType]  = Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), 'desc', $scope.status['sortMethod']);
             $scope.slideRepeat[productType]   = Utils.prepareSlideRepeat($scope.ProductsMeta[productType]);
             
             $scope.status['loading'][productType] = false;
@@ -76,13 +94,13 @@ angular.module('starter.controllers-live', [])
       return $scope.ProductsMeta[key];
   };
   $scope.getProductImage = function(productId) {
-    if($scope.ProductsImage.hasOwnProperty(productId)) {
-      return $scope.ProductsImage[productId].screenshot1;
+    if($scope.ProductsScreenshots.hasOwnProperty(productId)) {
+      return $scope.ProductsScreenshots[productId];
     }
   };
   $scope.getProductIcon = function(productId) {
-    if($scope.ProductsImage.hasOwnProperty(productId)) {
-      return $scope.ProductsImage[productId].icon;
+    if($scope.ProductsIcons.hasOwnProperty(productId)) {
+      return $scope.ProductsIcons[productId];
     }
   };
   
@@ -93,7 +111,7 @@ angular.module('starter.controllers-live', [])
       Products.getProductIcon(productId).then(
         function(ProductImages){
           if(ProductImages != null) {
-            $scope.ProductsImage[productId] = ProductImages;
+            $scope.ProductsIcons[productId] = ProductImages.icon;
           }
         }
       )
@@ -104,7 +122,7 @@ angular.module('starter.controllers-live', [])
       Products.getProductIconLarge(productId).then(
         function(ProductImages){
           if(ProductImages != null) {
-            $scope.ProductsImage[productId] = ProductImages;
+            $scope.ProductsScreenshots[productId] = ProductImages.screenshot1;
           }
         }
       )
@@ -127,7 +145,6 @@ angular.module('starter.controllers-live', [])
         if(FeaturedProductsMeta != null) {
           
           $scope.FeaturedProductsMeta[screenView] = Utils.arrayValuesAndKeysProducts(FeaturedProductsMeta);
-          console.log($scope.FeaturedProductsMeta)
           
           $scope.status['loading']['featured'] = false;
           $scope.$broadcast('scroll.refreshComplete');
@@ -170,7 +187,7 @@ angular.module('starter.controllers-live', [])
         }
       )
     }
-  }
+  };
   
   var tempPressed = false;
   $scope.walletButtonPressed = function(productId) {
