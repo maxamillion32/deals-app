@@ -43,6 +43,7 @@ angular.module('starter', [
   
   // browsing
   'starter.controllers-live',
+  'starter.controllers-submissions',
   'starter.services-products',
   
   // submit management
@@ -144,6 +145,17 @@ angular.module('starter', [
     }
   })
   
+  .state('other.submissions', {
+    url: '/submissions',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/submissions.html',
+        controller: 'SubmissionsCtrl',
+        resolve: {authResolve: authResolve}
+      }
+    }
+  })
+  
   .state('other.search', {
     url: '/search',
     views: {
@@ -183,8 +195,7 @@ angular.module('starter', [
     views: {
       'app-wallet': {
         templateUrl: 'templates/wallet.html',
-        controller: 'LiveCtrl',
-        resolve: {authResolve: authResolve}
+        controller: 'LiveCtrl'
       }
     }
   })

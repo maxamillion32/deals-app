@@ -1,0 +1,42 @@
+<ion-view view-title="My submissions">
+
+  <ion-content class="center grey">
+    
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    
+    <!-- 
+    <div class="row row-header">
+      <h1 id="category-title">
+        {{productType}} deals
+      </h1>
+    </div>
+    -->
+
+    
+    <div ng-init="loadLatest()" ng-switch="status.loading">
+        <div ng-switch-when="null" class="center">
+          <br>
+          <p>No submissions</p>
+        </div>
+        <div ng-switch-when="true" class="center">
+          <br>
+          <ion-spinner icon="dots"></ion-spinner>
+        </div>
+        <div ng-switch-when="false">
+          <ion-slide-box>
+            <ion-slide ng-repeat="item in ProductsMeta | orderBy: '-value.timestamp_creation'">
+              
+              <featured-card></featured-card>
+
+            </ion-slide>
+          </ion-slide-box>
+        </div>
+      </div> <!-- ./ items per category -->
+    
+    
+    
+  </ion-content>
+</ion-view>
