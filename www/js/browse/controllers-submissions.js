@@ -3,7 +3,6 @@ angular.module('starter.controllers-submissions', [])
 // user submissions
 .controller('SubmissionsCtrl', function(
   $scope, $state,
-  $ionicSlideBoxDelegate,
   Auth, Products, Utils) {
 
   // ----
@@ -19,6 +18,7 @@ angular.module('starter.controllers-submissions', [])
 
   $scope.$on('$ionicView.enter', function(e) {
      $scope.AuthData = Auth.AuthData;
+     $scope.loadLatest();
   });
   
   $scope.doRefresh = function() {
@@ -41,10 +41,9 @@ angular.module('starter.controllers-submissions', [])
             $scope.ProductsMeta  = Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), 'desc', 'timestamp_creation');
             $scope.status['loading'] = false;
             $scope.$broadcast('scroll.refreshComplete');
-            $ionicSlideBoxDelegate.update();
             
             // @dependency
-            loadProductsScreenshots(ProductsMeta)
+            loadProductsIcons(ProductsMeta)
         } else {
             $scope.status['loading'] = null;
         };
@@ -103,6 +102,10 @@ angular.module('starter.controllers-submissions', [])
 
   $scope.goTo = function(nextState) {
     $state.go(nextState)
+  };
+  
+  $scope.editProduct = function(productId) {
+    $state.go('other.submit', {productId: productId})
   };
 
 });

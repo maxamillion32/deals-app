@@ -1,27 +1,67 @@
 <ion-view view-title="Wallet">
 
-  
-  
-</ion-header-bar>
-
-  <ion-content class="center padding">
+  <ion-content class="grey">
     
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
     
-    <br>
-    
-    <h3>Sign in to save and manage your favorite deals</h3>
-    
-    <br>
-    
-     <button class="button button-block button-positive" ng-click="goTo('other.account')">Sign in</button>
+    <!-- 
+    <div class="row row-header">
+      <h1 id="category-title">
+        {{productType}} deals
+      </h1>
+    </div>
+    -->
 
-   
+    <div ng-switch="status.loading">
+        <div ng-switch-when="null" class="center">
+          <br>
+          <p>No deals saved</p>
+        </div>
+        <div ng-switch-when="signed-out" class="center padding">
+          <br>
+          <h3>Sign in to save and manage your favorite deals</h3>
+          <br>
+          <p>
+            <button class="button button-block button-positive" ng-click="goTo('other.account')">Sign in</button>
+          </p>
+        </div>
+        <div ng-switch-when="true" class="center">
+          <br>
+          <ion-spinner icon="dots"></ion-spinner>
+        </div>
+        <div ng-switch-when="false">
+          
+          <ion-list>
+            <ion-item class="item item-thumbnail-left item-icon-right" 
+              ng-click="walletButtonPressed(item.key)"
+              ng-repeat="item in ProductsMeta | orderBy: '-value.timestamp_creation'">
+              <img ng-src="{{ProductsImage[item.key].icon}}">
+              <h2>{{item.value.title}}</h2>
+              <p>{{item.value.productType}} / {{item.value.categoryId}}</p>
+              
+              <i href=""
+                ng-show="Wallet[item.key] == true"
+                ng-click="walletButtonPressed(item.key)" 
+                class="icon checked ion-ios-star">
+              </i>
+              <i href="" 
+                ng-show="Wallet[item.key] != true"
+                ng-click="walletButtonPressed(item.key)" 
+                class="icon unchecked ion-ios-star-outline">
+              </i>
+              
+              
+            </ion-item>
+          </ion-list>
+
+          
+        </div>
+      </div> <!-- ./ items per category -->
+    
+    
     
   </ion-content>
-  
- 
 </ion-view>

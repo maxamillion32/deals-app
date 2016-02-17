@@ -573,7 +573,7 @@ angular.module('starter.services-products', [])
             case 'voucher':
                 //
                 INDEX_VALUES['timestamp_update'] = Firebase.ServerValue.TIMESTAMP; // override timestamp_update
-                INDEX_VALUES['discount_perc']        = ProductMeta.price_old; // override price
+                INDEX_VALUES['discount_perc']        = ProductMeta.discount_perc; // override price
                 INDEX_VALUES['date_end']       = ProductMeta.date_end; // override price
                 break
         };
@@ -868,4 +868,98 @@ angular.module('starter.services-products', [])
     return self;
 })
 
+
+
+// -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+
+
+/**
+* Wallet Management
+*/
+.factory('Wallet', function($q, Products, Utils, Codes) {
+  var self = this;
+  
+  // GET  wallet/$uid
+  self.getList = function(uid) {
+    var qGet = $q.defer();
+    var ref = new Firebase(FBURL);
+    ref.child("wallet").child(uid).on("value", function(snapshot) {
+        var WalletList = snapshot.val();
+        if(WalletList != null) {
+          qGet.resolve(WalletList);
+        } else {
+          qGet.reject(null);
+        } // walletlist null
+    }, function (error) {
+        qGet.reject(error);
+    }); // walletlist error
+    return qGet.promise;
+  };
+  
+  // GET  wallet/$uid
+  self.getProductsMeta = function(uid) {
+    var qGet = $q.defer();
+    var ref = new Firebase(FBURL);
+    
+    ref.child("wallet").child(uid).on("value", function(snapshot) {
+        var WalletList = snapshot.val();
+        if(WalletList != null) {
+          Products.getProductMetaFromList(WalletList).then(
+            function(ProductsMeta){
+              if(ProductsMeta != null) {
+                qGet.resolve(ProductsMeta);
+              } else {
+                qGet.reject(null);
+              } // productsmeta null
+            },
+            function(error){
+              qGet.reject(error);
+            }
+          ) // products meta error
+        } else {
+          qGet.reject(null);
+        } // walletlist null
+    }, function (error) {
+        qGet.reject(error);
+    }); // walletlist error
+    
+    return qGet.promise;
+  };
+
+  // SET
+  self.save = function(uid, productId) {
+    var qUpdate = $q.defer();
+    var ref = new Firebase(FBURL);
+    var onComplete = function(error) {
+      if (error) {
+        qUpdate.reject(error);
+      } else {
+        qUpdate.resolve();
+      }
+    };
+    ref.child('wallet').child(uid).child(productId).set(true, onComplete);
+    return qUpdate.promise;
+  };
+  
+  // REMOVE
+  self.remove = function(uid, productId) {
+    var qUpdate = $q.defer();
+    var ref = new Firebase(FBURL);
+    var onComplete = function(error) {
+      if (error) {
+        qUpdate.reject(error);
+      } else {
+        qUpdate.resolve();
+      }
+    };
+    ref.child('wallet').child(uid).child(productId).set(null, onComplete);
+    return qUpdate.promise;
+  };
+  
+  
+  
+  return self;
+});
 

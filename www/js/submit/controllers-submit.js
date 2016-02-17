@@ -175,6 +175,8 @@ angular.module('starter.controllers-submit', [])
           // psubmit
           $scope.status['submitLoading']      = true;
           
+          console.log($scope.ProductMeta, $scope.status['editMode'])
+          
           switch ($scope.status['editMode']) {
               case true:
                   //

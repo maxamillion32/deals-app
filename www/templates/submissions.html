@@ -1,6 +1,6 @@
 <ion-view view-title="My submissions">
 
-  <ion-content class="center grey">
+  <ion-content class="grey">
     
     <ion-refresher
       pulling-text="Pull to refresh..."
@@ -16,7 +16,7 @@
     -->
 
     
-    <div ng-init="loadLatest()" ng-switch="status.loading">
+    <div ng-switch="status.loading">
         <div ng-switch-when="null" class="center">
           <br>
           <p>No submissions</p>
@@ -26,13 +26,18 @@
           <ion-spinner icon="dots"></ion-spinner>
         </div>
         <div ng-switch-when="false">
-          <ion-slide-box>
-            <ion-slide ng-repeat="item in ProductsMeta | orderBy: '-value.timestamp_creation'">
-              
-              <featured-card></featured-card>
+          
+          <ion-list>
+            <ion-item class="item item-thumbnail-left" 
+              ng-click="editProduct(item.key)"
+              ng-repeat="item in ProductsMeta | orderBy: '-value.timestamp_creation'">
+              <img ng-src="{{ProductsImage[item.key].icon}}">
+              <h2>{{item.value.title}}</h2>
+              <p>{{item.value.productType}} / {{item.value.categoryId}}</p>
+            </ion-item>
+          </ion-list>
 
-            </ion-slide>
-          </ion-slide-box>
+          
         </div>
       </div> <!-- ./ items per category -->
     

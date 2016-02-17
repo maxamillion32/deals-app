@@ -6,7 +6,7 @@ angular.module('starter.controllers-live', [])
 .controller('LiveCtrl', function(
   $scope, $state,
   $ionicSlideBoxDelegate,
-  Auth, Products, Utils) {
+  Auth, Products, Utils, Wallet) {
 
   // ----
   // Init other
@@ -21,7 +21,7 @@ angular.module('starter.controllers-live', [])
   };
 
   $scope.$on('$ionicView.enter', function(e) {
-    
+    loadWallet();
   });
   
   $scope.doRefresh = function() {
@@ -29,6 +29,7 @@ angular.module('starter.controllers-live', [])
     $scope.loadLatest('online', false);
     $scope.loadLatest('voucher', false);
     $scope.loadFeaturedItems('live', false);
+    loadWallet();
   };
 
   $scope.slideRepeat = {};
@@ -148,6 +149,61 @@ angular.module('starter.controllers-live', [])
         console.log(error)
       }
     )
+  };
+  
+  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  
+  $scope.Wallet = {};
+  function loadWallet() {
+    if($scope.AuthData.hasOwnProperty('uid')) {
+      Wallet.getList($scope.AuthData.uid).then(
+        function(WalletList){
+          $scope.Wallet = WalletList;
+        },
+        function(error){
+          if(error != null) {
+            console.log(error);
+          }
+        }
+      )
+    }
+  }
+  
+  var tempPressed = false;
+  $scope.walletButtonPressed = function(productId) {
+    
+    if($scope.AuthData.hasOwnProperty('uid') && !tempPressed) {
+      tempPressed = true;
+      
+      if(!$scope.Wallet[productId]){ // add
+        
+        Wallet.save($scope.AuthData.uid, productId).then(
+          function(success){
+            $scope.Wallet[productId] = true;
+            tempPressed = false;
+          },
+          function(error){
+            tempPressed = false;
+          }
+        )
+        
+      } else { // remove
+      
+        Wallet.remove($scope.AuthData.uid, productId).then(
+          function(success){
+            $scope.Wallet[productId] = false;
+            tempPressed = false;
+          },
+          function(error){
+            tempPressed = false;
+          }
+        )
+        
+      } // end if
+    } // end auth and tempPressed
   };
   
 

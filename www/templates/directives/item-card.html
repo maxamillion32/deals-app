@@ -11,12 +11,32 @@
       </h2>
       
       <span id="price">
-        <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
-        <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
+        <div ng-switch="ProductsMeta[productType][$index + 0 + slideCount.iter].value.productType">
+          <div ng-switch-when="local">
+            <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
+          </div>
+          <div ng-switch-when="online">
+            <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
+          </div>
+          <div ng-switch-when="voucher">
+            <span class="offer-value">{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.discount_perc}}% off!</span>
+          </div>
+        </div>
       </span>
       
       <span id="save">
-        <a href="" ng-click="doSomething()" class="ion-ios-star-outline"></a>
+        <a href=""
+          ng-show="Wallet[ProductsMeta[productType][$index + 0 + slideCount.iter].key] == true"
+          ng-click="walletButtonPressed(ProductsMeta[productType][$index + 0 + slideCount.iter].key)" 
+          class="checked ion-ios-star">
+        </a>
+        <a href="" 
+          ng-show="Wallet[ProductsMeta[productType][$index + 0 + slideCount.iter].key] != true"
+          ng-click="walletButtonPressed(ProductsMeta[productType][$index + 0 + slideCount.iter].key)" 
+          class="unchecked ion-ios-star">
+        </a>
       </span>
 
     </div>
@@ -36,12 +56,32 @@
       </h2>
       
       <span id="price">
-        <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
-        <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
+        <div ng-switch="ProductsMeta[productType][$index + 1 + slideCount.iter].value.productType">
+          <div ng-switch-when="local">
+            <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
+          </div>
+          <div ng-switch-when="online">
+            <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
+          </div>
+          <div ng-switch-when="voucher">
+            <span class="offer-value">{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.discount_perc}}% off!</span>
+          </div>
+        </div>
       </span>
       
       <span id="save">
-        <a href="" ng-click="doSomething()" class="ion-ios-star-outline"></a>
+        <a href=""
+          ng-show="Wallet[ProductsMeta[productType][$index + 1 + slideCount.iter].key] == true"
+          ng-click="walletButtonPressed(ProductsMeta[productType][$index + 1 + slideCount.iter].key)" 
+          class="checked ion-ios-star">
+        </a>
+        <a href="" 
+          ng-show="Wallet[ProductsMeta[productType][$index + 1 + slideCount.iter].key] != true"
+          ng-click="walletButtonPressed(ProductsMeta[productType][$index + 1 + slideCount.iter].key)" 
+          class="unchecked ion-ios-star">
+        </a>
       </span>
 
     </div>

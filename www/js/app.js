@@ -43,6 +43,7 @@ angular.module('starter', [
   
   // browsing
   'starter.controllers-live',
+  'starter.controllers-wallet',
   'starter.controllers-submissions',
   'starter.services-products',
   
@@ -195,7 +196,7 @@ angular.module('starter', [
     views: {
       'app-wallet': {
         templateUrl: 'templates/wallet.html',
-        controller: 'LiveCtrl'
+        controller: 'WalletCtrl'
       }
     }
   })

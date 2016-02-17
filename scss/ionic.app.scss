@@ -113,7 +113,6 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
 .custom-item-card { 
    height: 200px;
    width: 100%;
-   height: auto;
    margin: auto;
    position: relative; 
    background: rgba(0,0,0,0.8);
@@ -141,6 +140,13 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
    padding-right: 10px;
    padding-top: 5px;
    font-size: 28px;
+   
+}
+.checked {
+    color: green !important;
+}
+.unchecked {
+    color: red !important;
 }
 .custom-item-card h2 { 
    position: absolute; 
