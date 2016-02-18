@@ -3,7 +3,7 @@ angular.module('starter.controllers-product', [])
 // Product Management
 .controller('ProductCtrl', function(
   $scope, $state, $stateParams, $timeout,
-  Auth, Products, Utils, Wallet, Comments, Upvotes) {
+  Auth, Products, Utils, Wallet, Comments, Upvotes, ShareFactory) {
 
   // ----
   // Init other
@@ -273,6 +273,10 @@ angular.module('starter.controllers-product', [])
   
   $scope.goToProduct = function(productId) {
     $state.go('app.product', {productId: productId})
+  };
+  
+  $scope.shareGeneral = function(productId) {
+    ShareFactory.shareGeneral($scope.ProductsMeta[productId], $scope.ProductsScreenshots[productId]);
   };
 
 });

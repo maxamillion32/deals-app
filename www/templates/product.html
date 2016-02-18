@@ -1,6 +1,6 @@
-<ion-view view-title="{{ProductsMeta[productId].title}}">
+<ion-view view-title="Deal">
 
-  <ion-content>
+  <ion-content class="grey">
     
     <ion-refresher
       pulling-text="Pull to refresh..."
@@ -20,18 +20,21 @@
         
         <div class="custom-item-card">
           
+          
+          
           <img 
+            style="width: 100vw !important;"
             ng-src="{{getProductImage(productId)}}">
             
             <span id="price">
               <div ng-switch="ProductsMeta[productId].productType">
                 <div ng-switch-when="local">
-                  <span class="old-price">${{ProductsMeta[productId].price_old}}</span>
-                  <span class="offer-value">${{ProductsMeta[productId].price_now}}</span>
+                  <span class="old-price">£{{ProductsMeta[productId].price_old}}</span>
+                  <span class="offer-value">£{{ProductsMeta[productId].price_now}}</span>
                 </div>
                 <div ng-switch-when="online">
-                  <span class="old-price">${{ProductsMeta[productId].price_old}}</span>
-                  <span class="offer-value">${{ProductsMeta[productId].price_now}}</span>
+                  <span class="old-price">£{{ProductsMeta[productId].price_old}}</span>
+                  <span class="offer-value">£{{ProductsMeta[productId].price_now}}</span>
                 </div>
                 <div ng-switch-when="voucher">
                   <span class="offer-value">{{ProductsMeta[productId].discount_perc}}% off!</span>
@@ -51,42 +54,50 @@
                 ng-click="walletButtonPressed(productId)" 
                 class="unchecked ion-ios-star">
               </a>
+      
             </span>
+            
+            <h2>
+              {{ProductsMeta[productId].title}} <br>
+              {{ProductsMeta[productId].location}}
+              
+              <br><br>
+      
+              <span>
+                <i class="icon ion-arrow-up-a"></i>
+                {{ProductsIndexValues[productId].upvotes_count}}
+                &nbsp;
+                <i class="ion-ios-chatbubble"></i>
+                {{ProductsIndexValues[productId].comments_count}}
+              </span> 
+          
+            </h2>
           
         </div>
         
-        <div class="padding">
-          <button class="button button-stable button-small"
-            style="margin-right: 10px !important;"
-            ng-repeat="tag in ProductsMeta[productId].tags"
-            ng-click="goToTag(tag)">{{tag}}</button>
-        </div>
         
-        <div class="padding">
-          <h3>
-            {{ProductsMeta[productId].title}}
-          </h3>
+        
+        <div class="padding" style="background: #fff">
           <h4>
             Offer ends: {{formatTimestamp(ProductsMeta[productId].date_end)}}
           </h4>
           <p>
-            <button class="button icon-left button-stable ion-ios-arrow-up" ng-click="upVote(productId)">Upvote</button>
+            <button class="button button-stable icon-left  ion-arrow-up-a" ng-click="upVote(productId)">Upvote</button>
+            &nbsp;
+            <button class="button button-stable icon-left ion-android-share-alt" ng-click="shareGeneral(productId)">Share</button>
           </p>
-          <p>
-            {{ProductsIndexValues[productId].upvotes_count}} upvotes
-            {{ProductsIndexValues[productId].comments_count}} comments
-          </p>
-          <p>
-            {{ProductsMeta[productId].location}}
-          </p>
-          
           <p>
             {{ProductsMeta[productId].description}}
           </p>
+          <p>
+            <button class="button button-stable button-small"
+            style="margin-right: 10px !important;"
+            ng-repeat="tag in ProductsMeta[productId].tags"
+            ng-click="goToTag(tag)">{{tag}}</button>
+          </p>
         </div>
-        
 
-        
+
         <div class="grey padding" id="comments">
           
           <p ng-show="!AuthData.uid">
@@ -141,7 +152,7 @@
       {{ProductsMeta[productId].discount_code}}
     </h1>
     <div class="buttons" ng-click="getDeal()">
-      <button class="button button-positive">GET IT</button>
+      <button class="button button-positive">G E T&nbsp;&nbsp;&nbsp;I T</button>
     </div>
   </ion-footer-bar>
 </ion-view>

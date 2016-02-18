@@ -63,7 +63,8 @@ angular.module('starter', [
   'starter.services-codes',
   'starter.services-utils',
   'starter.services-fb-functions',
-  'starter.directives-templates'
+  'starter.directives-templates',
+  'starter.services-sharing'
   ]
 )
 
@@ -150,6 +151,7 @@ angular.module('starter', [
       }
     }
   })
+  
   
   .state('other.submissions', {
     url: '/submissions',

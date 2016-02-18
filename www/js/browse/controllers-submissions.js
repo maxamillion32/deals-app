@@ -46,6 +46,7 @@ angular.module('starter.controllers-submissions', [])
             loadProductsIcons(ProductsMeta)
         } else {
             $scope.status['loading'] = null;
+            $scope.$broadcast('scroll.refreshComplete');
         };
       },
       function(error){
@@ -54,6 +55,7 @@ angular.module('starter.controllers-submissions', [])
         } else {
             $scope.status['loading'] = false;
         }
+        $scope.$broadcast('scroll.refreshComplete');
       }
     );
   };

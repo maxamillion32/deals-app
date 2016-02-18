@@ -1,24 +1,33 @@
 <ion-side-menu side="left">
-    <ion-header-bar class="bar bar-dark">
+    <ion-header-bar class="bar bar-stable">
       <h1 class="title">Deals app</h1>
     </ion-header-bar>
-    <ion-content class="dark">
+    <ion-content class="grey">
       <ion-list>
         
-        <ion-item menu-close href="#/app/live">
+        <ion-item class="item item-icon-left item-stable" menu-close href="#/app/live">
+          <i class="icon ion-ios-pulse"></i>
           Browse
         </ion-item>
-        <ion-item menu-close href="#/other/search/">
+        
+        <ion-item class="item item-icon-left item-stable" menu-close href="#/other/search/">
+          <i class="icon ion-ios-search"></i>
           Search
         </ion-item>
-        <ion-item menu-close href="#/other/account">
-          Account
+        
+        <ion-item class="item item-icon-left item-stable" menu-close href="#/other/submit/">
+          <i class="icon ion-ios-plus-empty"></i>
+          Add deal
         </ion-item>
-        <ion-item menu-close href="#/other/submit/">
-          + Add
-        </ion-item>
-        <ion-item menu-close href="#/other/submissions">
+        
+        <ion-item class="item item-icon-left item-stable" menu-close href="#/other/submissions">
+          <i class="icon ion-ios-color-filter-outline"></i>
           My submissions
+        </ion-item>
+        
+        <ion-item class="item item-icon-left item-stable" menu-close href="#/other/account">
+          <i class="icon ion-ios-person"></i>
+          Account
         </ion-item>
         
       </ion-list>

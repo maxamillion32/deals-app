@@ -24,46 +24,36 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Colors
 // -------------------------------
 $greylight:                           #f2f2f2 !default;
-$positive:                            #F6D127 !default;
-$assertive:                           #ef473a !default;
+$positive:                            #70AD47 !default;
+$assertive:                           #ED7D31 !default;
+
+$greynormal:                           #A5A5A5 !default;
 
 // Base
 // -------------------------------
 $base-background-color:               #fff !default;
-$base-color:                          #515151 !default;
+$base-color:                          #000 !default;
 
 // Tabs
 // -------------------------------
 $tabs-light-border:                   rgba(0,0,0,0) !default;
 $tabs-positive-border:                rgba(0,0,0,0) !default;
 
-// Floating
-.button-float{
-  background: $positive !important;
-  color:white !important;
-  z-index: 12 !important;
-  position: absolute !important; 
-  bottom: 10px !important;
-  right: 10px !important;
-  border-radius: 100% !important;
-  min-height: 48px !important;
-  min-width: 48px !important;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
-  -webkit-transform: translate3d(0, 0, 0) !important;
-  transform: translate3d(0, 0, 0) !important;
-  -webkit-transition: 0.2s linear !important;
-  transition: 0.2s linear !important;
-  -webkit-transition-property: -webkit-transform, all !important;
-  transition-property: transform, all !important;
+// Buttons
+// -------------------------------
+$button-light-bg:                 #fff !default;
+$button-light-text:               #444 !default;
+$button-light-border:             rgba(0,0,0,0) !default;
+$button-light-active-bg:          #fafafa !default;
+$button-light-active-border:      #ccc !default;
 
-}
+$button-stable-bg:                $greylight !default;
+$button-stable-text:              #444 !default;
+$button-stable-border:            rgba(0,0,0,0) !default;
+$button-stable-active-bg:         #e5e5e5 !default;
+$button-stable-active-border:     #a2a2a2 !default;
 
-.button-float:hover{
-  -webkit-transform: translate3d(0, -1px, 0)  !important;
-  transform: translate3d(0, -1px, 0) !important;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4) !important;
-    background: darken($positive, 10%) !important;
-}
+
 
 // Slidebox Intro
 // -------------------------------
@@ -91,7 +81,6 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
     font-weight: 600 !important;
 }
 
-
 // Profile
 // -------------------------------
 .profile img {
@@ -103,24 +92,21 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
 }
 
 
-// Cards
-// -------------------------------
-
-
-
-// Items display
+// Products
 // -------------------------------
 .custom-item-card { 
    height: 200px;
    width: 100%;
    margin: auto;
    position: relative; 
-   background: rgba(0,0,0,0.8);
+   background: $greynormal;
+   border: 0px;
 }
 .custom-item-card img { 
    height: 200px;
-   width: 100%;
    position: relative; 
+   border: 0px;
+   width: 100%;
 }
 .custom-item-card #price { 
    position: absolute; 
@@ -135,6 +121,14 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
    padding: 5px;
    margin: 5px;
 }
+span.old-price {
+    color: #fff;
+    text-decoration: line-through;
+}
+span.offer-value {
+    color: red;
+    font-weight: bold;
+}
 .custom-item-card #save { 
    position: absolute; 
    top: 0px; 
@@ -146,10 +140,10 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
    font-size: 28px;
 }
 .checked {
-    color: green !important;
+    color: $positive !important;
 }
 .unchecked {
-    color: red !important;
+    color: #fff !important;
 }
 .custom-item-card h2 { 
    position: absolute; 
@@ -174,35 +168,39 @@ $tabs-positive-border:                rgba(0,0,0,0) !default;
    margin: 0px;
    width: 100%;
 }
-span.old-price {
-    color: red;
-    text-decoration: line-through;
-}
-span.offer-value {
-    color: green;
-}
 
 
 
 
-
-.row {
-    margin: 0px !important;
-    padding: 0px !important;
-}
-.col {
-    margin: 0px !important;
-    padding: 0px 5px !important;
-}
-
-.row.row-header {
-    padding: 20px !important;
-    background: #fff !important;
-}
-
-// Dark
+// Floating button
 // -------------------------------
 
+.button-float{
+  background: $positive !important;
+  color:white !important;
+  z-index: 12 !important;
+  position: absolute !important; 
+  bottom: 10px !important;
+  right: 10px !important;
+  border-radius: 100% !important;
+  min-height: 48px !important;
+  min-width: 48px !important;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transition: 0.2s linear !important;
+  transition: 0.2s linear !important;
+  -webkit-transition-property: -webkit-transform, all !important;
+  transition-property: transform, all !important;
+
+}
+
+.button-float:hover{
+  -webkit-transform: translate3d(0, -1px, 0)  !important;
+  transform: translate3d(0, -1px, 0) !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4) !important;
+    background: darken($positive, 10%) !important;
+}
 
 
 // Post
@@ -224,20 +222,18 @@ span.offer-value {
     background: $greylight;
 }
 h1 {
-    letter-spacing: 5px; 
-    text-transform: uppercase;
+    
 }
 h1#category-title {
     font-size: 14px !important;
     margin: 0px !important;
     padding: 0px !important;
     font-weight: 600;
+    text-transform: capitalize;
 }
 .error-messages {
     color: $assertive;
 }
-
-
 
 .center {
     text-align: center;
@@ -256,7 +252,6 @@ span.small {
     font-size: 12px;
 }
 
-
 .tag {
     padding: 5px;
     border-radius: 6px;
@@ -267,6 +262,23 @@ span.small {
 }
 .tag button {
     color: #fff !important;
+}
+
+
+// Decorators 2
+// -------------------------------
+.row {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+.col {
+    margin: 0px !important;
+    padding: 0px 5px !important;
+}
+
+.row.row-header {
+    padding: 20px !important;
+    background: #fff !important;
 }
 
 

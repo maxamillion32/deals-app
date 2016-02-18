@@ -10,10 +10,10 @@
       
       
       
-      {{item.value.title}}   <br><br>
+      {{item.value.title}}   <br>
       
       <span>
-        <i class="icon ion-ios-arrow-up"></i>
+        <i class="icon ion-arrow-up-a"></i>
         {{item.index.upvotes_count}}
         &nbsp;
         <i class="ion-ios-chatbubble"></i>
@@ -33,7 +33,7 @@
         <span class="offer-value">£{{item.value.price_now}}</span>
       </div>
       <div ng-switch-when="voucher">
-        <span class="offer-value">{{item.value.discount_perc}}% off!</span>
+        <span class="offer-value">-{{item.value.discount_perc}}%</span>
       </div>
     </div>
   </span>

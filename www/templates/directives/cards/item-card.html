@@ -12,10 +12,10 @@
       <h2>
           {{ProductsMeta[productType][$index + 0 + slideCount.iter].value.title}} 
           
-          <br><br>
+          <br>
       
           <span>
-            <i class="icon ion-ios-arrow-up"></i>
+            <i class="icon ion-arrow-up-a"></i>
             {{ProductsMeta[productType][$index + 0 + slideCount.iter].index.upvotes_count}}
             &nbsp;
             <i class="ion-ios-chatbubble"></i>
@@ -35,7 +35,7 @@
             <span class="offer-value">£{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
           </div>
           <div ng-switch-when="voucher">
-            <span class="offer-value">{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.discount_perc}}% off!</span>
+            <span class="offer-value">-{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.discount_perc}}%</span>
           </div>
         </div>
       </span>
@@ -72,10 +72,10 @@
       <h2>
           {{ProductsMeta[productType][$index + 1 + slideCount.iter].value.title}}  
           
-          <br><br>
+          <br>
       
           <span>
-            <i class="icon ion-ios-arrow-up"></i>
+            <i class="icon ion-arrow-up-a"></i>
             {{ProductsMeta[productType][$index + 1 + slideCount.iter].index.upvotes_count}}
             &nbsp;
             <i class="ion-ios-chatbubble"></i>
@@ -97,7 +97,7 @@
             <span class="offer-value">£{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
           </div>
           <div ng-switch-when="voucher">
-            <span class="offer-value">{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.discount_perc}}% off!</span>
+            <span class="offer-value">-{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.discount_perc}}%</span>
           </div>
         </div>
       </span>
