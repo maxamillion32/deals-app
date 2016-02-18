@@ -9,7 +9,7 @@
     </ion-refresher>
     
     <!-- featured banner -->
-      <div>
+      <div ng-show="status.featuredExists">
           <ion-slide-box>
             <ion-slide ng-repeat="item in FeaturedProductsMeta['live'] | orderBy: '-value.timestamp_creation'">
               

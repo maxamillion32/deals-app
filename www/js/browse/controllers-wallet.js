@@ -152,5 +152,9 @@ angular.module('starter.controllers-wallet', [])
   $scope.goTo = function(nextState) {
     $state.go(nextState)
   };
+  
+  $scope.goToProduct = function(productId) {
+    $state.go('app.product', {productId: productId})
+  };
 
 });

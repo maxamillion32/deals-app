@@ -1,7 +1,10 @@
 <!-- custom item card -->
-<div class="custom-item-card" ng-show="item.value.title">
+<div 
+  class="custom-item-card" ng-show="item.value.title">
   
-  <img ng-src="{{getProductImage(item.key)}}">
+  <img 
+    ng-click="goToProduct(item.key)"
+    ng-src="{{getProductImage(item.key)}}">
     
   <h2>
       {{item.value.title}}  
@@ -24,9 +27,7 @@
   </span>
   
   
-  <span id="save">
-    <a href="" ng-click="walletButtonPressed(item.key)" class="ion-ios-star-outline"></a>
-  </span>
+
   <span id="save">
     <a href=""
       ng-show="Wallet[item.key] == true"

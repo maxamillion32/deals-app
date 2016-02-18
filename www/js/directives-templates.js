@@ -15,13 +15,13 @@ angular.module('starter.directives-templates', [])
 
 .directive('itemCard', function() {
   return {
-    templateUrl: 'templates/directives/item-card.html'
+    templateUrl: 'templates/directives/cards/item-card.html'
   };
 })
 
 .directive('featuredCard', function() {
   return {
-    templateUrl: 'templates/directives/featured-card.html'
+    templateUrl: 'templates/directives/cards/featured-card.html'
   };
 })
 

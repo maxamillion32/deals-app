@@ -882,6 +882,11 @@ angular.module('starter.services-products', [])
 .factory('Wallet', function($q, Products, Utils, Codes) {
   var self = this;
   
+  self.cached = {
+      List: {},
+      Meta: {},
+  };
+  
   // GET  wallet/$uid
   self.getList = function(uid) {
     var qGet = $q.defer();
@@ -889,7 +894,26 @@ angular.module('starter.services-products', [])
     ref.child("wallet").child(uid).on("value", function(snapshot) {
         var WalletList = snapshot.val();
         if(WalletList != null) {
-          qGet.resolve(WalletList);
+            self.cached['List'] =  WalletList;
+            qGet.resolve(WalletList);
+        } else {
+          qGet.reject(null);
+        } // walletlist null
+    }, function (error) {
+        qGet.reject(error);
+    }); // walletlist error
+    return qGet.promise;
+  };
+  
+  // GET  wallet/$uid/$productId
+  self.getList_Indiv = function(uid, productId) {
+    var qGet = $q.defer();
+    var ref = new Firebase(FBURL);
+    ref.child("wallet").child(uid).child(productId).on("value", function(snapshot) {
+        var WalletList = snapshot.val();
+        if(WalletList != null) {
+            self.cached['List'] =  WalletList;
+            qGet.resolve(WalletList);
         } else {
           qGet.reject(null);
         } // walletlist null
@@ -910,7 +934,8 @@ angular.module('starter.services-products', [])
           Products.getProductMetaFromList(WalletList).then(
             function(ProductsMeta){
               if(ProductsMeta != null) {
-                qGet.resolve(ProductsMeta);
+                    self.cached['Meta'] =  ProductsMeta;
+                    qGet.resolve(ProductsMeta);
               } else {
                 qGet.reject(null);
               } // productsmeta null

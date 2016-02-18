@@ -48,6 +48,10 @@ angular.module('starter', [
   'starter.controllers-submissions',
   'starter.services-products',
   
+  // product
+  'starter.controllers-product',
+  'starter.services-comments', // &upvotes
+  
   // submit management
   'starter.controllers-submit',
   'starter.services-categories',
@@ -203,8 +207,15 @@ angular.module('starter', [
     }
   })
   
-  
-  
+  .state('app.product', {
+    url: '/product/:productId',
+    views: {
+      'app-live': {
+        templateUrl: 'templates/product.html',
+        controller: 'ProductCtrl'
+      }
+    }
+  })
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/redirect');

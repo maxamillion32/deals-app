@@ -1,0 +1,147 @@
+<ion-view view-title="{{ProductsMeta[productId].title}}">
+
+  <ion-content>
+    
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      spinner="dots"
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    
+    <div ng-switch="status.loading">
+      <div ng-switch-when="true" class="center">
+        <br>
+        <ion-spinner icon="dots"></ion-spinner>
+      </div>
+      <div ng-switch-when="false" class="center">
+        <!-- CONTENT -->
+        
+        
+        
+        <div class="custom-item-card">
+          
+          <img 
+            ng-src="{{getProductImage(productId)}}">
+            
+            <span id="price">
+              <div ng-switch="ProductsMeta[productId].productType">
+                <div ng-switch-when="local">
+                  <span class="old-price">${{ProductsMeta[productId].price_old}}</span>
+                  <span class="offer-value">${{ProductsMeta[productId].price_now}}</span>
+                </div>
+                <div ng-switch-when="online">
+                  <span class="old-price">${{ProductsMeta[productId].price_old}}</span>
+                  <span class="offer-value">${{ProductsMeta[productId].price_now}}</span>
+                </div>
+                <div ng-switch-when="voucher">
+                  <span class="offer-value">{{ProductsMeta[productId].discount_perc}}% off!</span>
+                </div>
+              </div>
+            </span>
+            
+            
+            <span id="save">
+              <a href=""
+                ng-show="Wallet[productId] == true"
+                ng-click="walletButtonPressed(productId)" 
+                class="checked ion-ios-star">
+              </a>
+              <a href="" 
+                ng-show="Wallet[productId] != true"
+                ng-click="walletButtonPressed(productId)" 
+                class="unchecked ion-ios-star">
+              </a>
+            </span>
+          
+        </div>
+        
+        <div class="padding">
+          <button class="button button-stable button-small"
+            style="margin-right: 10px !important;"
+            ng-repeat="tag in ProductsMeta[productId].tags"
+            ng-click="goToTag(tag)">{{tag}}</button>
+        </div>
+        
+        <div class="padding">
+          <h3>
+            {{ProductsMeta[productId].title}}
+          </h3>
+          <h4>
+            Offer ends: {{formatTimestamp(ProductsMeta[productId].date_end)}}
+          </h4>
+          <p>
+            <button class="button icon-left button-stable ion-ios-arrow-up" ng-click="upVote(productId)">Upvote</button>
+          </p>
+          <p>
+            {{ProductsIndexValues[productId].upvotes_count}} upvotes
+            {{ProductsIndexValues[productId].comments_count}} comments
+          </p>
+          <p>
+            {{ProductsMeta[productId].location}}
+          </p>
+          
+          <p>
+            {{ProductsMeta[productId].description}}
+          </p>
+        </div>
+        
+
+        
+        <div class="grey padding" id="comments">
+          
+          <p ng-show="!AuthData.uid">
+            You need to be <a href="" ng-click="goTo('other.account')">signed in</a> to post comments
+          </p>
+          <div id="signed-in-section" ng-show="AuthData.uid">
+            
+            <label class="item item-input">
+              <textarea rows="3" placeholder="Add comment" ng-model="FormData.commentValue"></textarea>
+            </label>
+            <button class="button button-block button-stable" ng-click="addComment()">Submit</button>
+          </div>
+          
+          <div ng-show="!status.commentsLoaded">
+            <button class="button button-block button-clear" ng-click="loadComments()">Load comments</button>
+          </div>
+          
+          <div ng-show="status.commentsLoaded" ng-switch="status.commentsLoading">
+            <div ng-switch-when="true">
+              <ion-spinner icon="dots"></ion-spinner>
+            </div>
+            <div ng-switch-when="false">
+              <!-- Comments -->
+              
+              <div class="list">
+
+                <a class="item item-text-wrap item-light item-avatar text-left" 
+                  ng-repeat="comment in ProductComments | orderBy: '-timestamp'">
+                  <img ng-src="{{getCommentProfile(comment.userId).profilePicture || 'img/ionic.png'}}">
+                  <h2>{{comment.message}}</h2>
+                  <p style="font-size: 12px">{{getCommentProfile(comment.userId).meta.displayName}}&nbsp;&nbsp;&nbsp;
+                  {{formatTimestamp(comment.timestamp)}}
+                  </p>
+                </a>
+ 
+              </div>
+              
+              <!-- // Comments -->
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- // CONTENT -->
+      </div>
+    </div>
+    
+  </ion-content>
+  
+  <ion-footer-bar align-title="left" class="bar-stable">
+    <h1 class="title">
+      {{ProductsMeta[productId].discount_code}}
+    </h1>
+    <div class="buttons" ng-click="getDeal()">
+      <button class="button button-positive">GET IT</button>
+    </div>
+  </ion-footer-bar>
+</ion-view>

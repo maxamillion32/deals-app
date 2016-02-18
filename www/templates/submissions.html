@@ -32,9 +32,12 @@
             <ion-item class="item item-thumbnail-left" 
               ng-click="editProduct(item.key)"
               ng-repeat="item in ProductsMeta | orderBy: '-value.timestamp_creation'">
-              <img ng-src="{{ProductsImage[item.key].icon}}">
+              <img ng-src="{{ProductsImage[item.key].icon || 'img/ionic.png'}}">
               <h2>{{item.value.title}}</h2>
               <p>{{item.value.productType}} / {{item.value.categoryId}}</p>
+              
+              <ion-option-button class="button-assertive" ng-click="deleteProduct(item.key)">Delete</ion-option-button>
+              
             </ion-item>
           </ion-list>
 

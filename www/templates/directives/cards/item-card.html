@@ -2,9 +2,12 @@
   <div class="col col-50">
     
     <!-- custom item card -->
-    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 0 + slideCount.iter].value.title">
+    <div class="custom-item-card" 
+      ng-show="ProductsMeta[productType][$index + 0 + slideCount.iter].value.title">
       
-      <img ng-src="{{getProductIcon(ProductsMeta[productType][$index + 0 + slideCount.iter].key)}}">
+      <img 
+      ng-click="goToProduct(ProductsMeta[productType][$index + 0 + slideCount.iter].key)"
+      ng-src="{{getProductIcon(ProductsMeta[productType][$index + 0 + slideCount.iter].key)}}">
         
       <h2>
           {{ProductsMeta[productType][$index + 0 + slideCount.iter].value.title}}  
@@ -47,9 +50,12 @@
   <div class="col col-50">
     
     <!-- custom item card -->
-    <div class="custom-item-card" ng-show="ProductsMeta[productType][$index + 1 + slideCount.iter].value.title">
+    <div
+      class="custom-item-card" ng-show="ProductsMeta[productType][$index + 1 + slideCount.iter].value.title">
       
-      <img ng-src="{{getProductIcon(ProductsMeta[productType][$index + 1 + slideCount.iter].key)}}">
+      <img 
+      ng-click="goToProduct(ProductsMeta[productType][$index + 1 + slideCount.iter].key)"
+      ng-src="{{getProductIcon(ProductsMeta[productType][$index + 1 + slideCount.iter].key)}}">
         
       <h2>
           {{ProductsMeta[productType][$index + 1 + slideCount.iter].value.title}}  

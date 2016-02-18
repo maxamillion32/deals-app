@@ -82,16 +82,17 @@ angular.module('starter.services-utils', [])
     switch(sortMethod){
       case 'asc':
         //
-        return targetObject.sort(compareDesc);
+        return targetObject.sort(compareAsc);
       break
       case 'desc':
         //
-        return targetObject.sort(compareAsc);
+        return targetObject.sort(compareDesc);
       break
     }
-    function compareDesc(a,b) {
+    function compareAsc(a,b) {
         a = a['index'];
         b = b['index'];
+        console.log(a[sortProperty], b[sortProperty], a[sortProperty]-b[sortProperty])
         if (a[sortProperty] < b[sortProperty])
             return -1;
         else if (a[sortProperty] > b[sortProperty])
@@ -99,7 +100,7 @@ angular.module('starter.services-utils', [])
         else
             return 0;
     };
-    function compareAsc(a,b) {
+    function compareDesc(a,b) {
         a = a['index'];
         b = b['index'];
         if (a[sortProperty] > b[sortProperty])
@@ -286,6 +287,36 @@ angular.module('starter.services-utils', [])
       return self.arrayValuesAndKeysProducts(ProductsMetaTemp);
     }
   };
+  
+  // return arrays
+  self.formatTagsString = function(tagsString) {
+    return tagsString.split(',');
+  };
+  
+  self.formatComments = function(commentsObj) {
+        
+        var formattedComments = [];
+        var tempObj = {};
+        
+        if(commentsObj != undefined && commentsObj != null) {
+            Object.keys(commentsObj).map(
+                function (userId) {
+                    Object.keys(commentsObj[userId]).map(
+                        function(commentId){
+                            
+                            tempObj = commentsObj[userId][commentId];
+                            tempObj["userId"] = userId;
+                            formattedComments.push(tempObj);
+                            
+                        }
+                    )
+                }
+            );
+        }
+        
+        return formattedComments;
+        
+    };
 
   return self;
 })

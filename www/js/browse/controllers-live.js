@@ -4,7 +4,7 @@ angular.module('starter.controllers-live', [])
 // 1. user is authenticated
 // 2. if authenticated, has filled in intro-settings
 .controller('LiveCtrl', function(
-  $scope, $state,
+  $scope, $state, $timeout,
   $ionicSlideBoxDelegate,
   Auth, Products, Utils, Wallet) {
 
@@ -16,6 +16,8 @@ angular.module('starter.controllers-live', [])
 
   // communicates with the DOM
   $scope.status = {
+    loadedOnce: false,
+    featuredExists: false,
     sortMethod: 'timestamp_creation',
     loading: {},
     mode: 0,  //0: signed out, 1: signed in (not set intro-settings)
@@ -25,19 +27,25 @@ angular.module('starter.controllers-live', [])
     
     // define the state and sorting preference
     console.log($state.current.name)
-    if ($state.current.name == 'app.live') {
+    if ($state.current.name == 'app.trending') {
       $scope.status['sortMethod'] = 'upvotes_count';
+      $scope.status['sortType'] = 'desc';
+      $scope.status['loadedOnce'] = false;
     } else {
       $scope.status['sortMethod'] = 'timestamp_creation';
+      $scope.status['sortType'] = 'desc';
     };
     
-    // load the groups
-    $scope.loadLatest('local');
-    $scope.loadLatest('online');
-    $scope.loadLatest('voucher');
-    $scope.loadFeaturedItems('live');
-    loadWallet();
+    if(!$scope.status.loadedOnce) {
+      // load the groups
+      $scope.loadLatest('local');
+      $scope.loadLatest('online');
+      $scope.loadLatest('voucher');
+      $scope.loadFeaturedItems('live');
+      $scope.status['loadedOnce'] = true;
+    };
     
+    loadWallet();
   });
   
   $scope.doRefresh = function() {
@@ -63,16 +71,20 @@ angular.module('starter.controllers-live', [])
     Products.filter('productType', productType, $scope.status['sortMethod'], 25).then(  // shows only last 25
       function(ProductsMeta){ 
         if(ProductsMeta != null) {
-          
-            $scope.ProductsMeta[productType]  = Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), 'desc', $scope.status['sortMethod']);
+            
+            // bind
+            $scope.ProductsMeta[productType]  = 
+            Utils.sortArray(Utils.arrayValuesAndKeysProducts(ProductsMeta), $scope.status['sortType'], $scope.status['sortMethod']);
             $scope.slideRepeat[productType]   = Utils.prepareSlideRepeat($scope.ProductsMeta[productType]);
             
+            // dom
             $scope.status['loading'][productType] = false;
             $scope.$broadcast('scroll.refreshComplete');
             $ionicSlideBoxDelegate.update();
             
             // @dependency
-            loadProductsIcons(ProductsMeta)
+            loadProductsIcons(ProductsMeta);
+            
         } else {
             $scope.status['loading'][productType] = null;
         };
@@ -123,6 +135,7 @@ angular.module('starter.controllers-live', [])
         function(ProductImages){
           if(ProductImages != null) {
             $scope.ProductsScreenshots[productId] = ProductImages.screenshot1;
+            $ionicSlideBoxDelegate.update();
           }
         }
       )
@@ -146,12 +159,18 @@ angular.module('starter.controllers-live', [])
           
           $scope.FeaturedProductsMeta[screenView] = Utils.arrayValuesAndKeysProducts(FeaturedProductsMeta);
           
+          
           $scope.status['loading']['featured'] = false;
           $scope.$broadcast('scroll.refreshComplete');
           $ionicSlideBoxDelegate.update();
           
           // @dependency
           loadProductsScreenshots(FeaturedProductsMeta);
+          
+          $timeout(function(){
+            $scope.status['featuredExists'] = true;
+            $ionicSlideBoxDelegate.update();
+          }, 250)
           
         } else {
           $scope.status['loading']['featured'] = null;
@@ -226,6 +245,10 @@ angular.module('starter.controllers-live', [])
 
   $scope.goTo = function(nextState) {
     $state.go(nextState)
+  };
+  
+  $scope.goToProduct = function(productId) {
+    $state.go('app.product', {productId: productId})
   };
 
 });

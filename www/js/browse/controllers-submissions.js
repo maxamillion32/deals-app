@@ -98,6 +98,13 @@ angular.module('starter.controllers-submissions', [])
       )
     })
   };
+  
+  $scope.deleteProduct = function(productId) {
+    Products.deleteProduct(productId, $scope.AuthData).then(
+      function(success){
+        $scope.loadLatest();
+      })
+  };
  
 
   $scope.goTo = function(nextState) {
