@@ -35,38 +35,11 @@
         </div>
         <div ng-switch-when="false">
           
-          <ion-list>
-            <ion-item class="item item-thumbnail-left item-icon-right" 
-              ng-click="goToProduct(item.key)"
-              ng-repeat="item in ProductsMeta | orderBy: '-value.timestamp_creation'">
-              <img ng-src="{{ProductsImage[item.key].icon || 'img/ionic.png'}}">
-              <h2>{{item.value.title}}</h2>
-              <p>{{item.value.productType}} / {{item.value.categoryId}}</p>
-              
-              
-              <ion-option-button 
-                ng-click="walletButtonPressed(item.key)" 
-                class="button-positive">
-                <span ng-show="Wallet[item.key] == true">
-                  Remove
-                </span>
-                <span ng-show="Wallet[item.key] != true">
-                  Add back
-                </span>
-              </ion-option-button>
-              
-              <i href=""
-                ng-show="Wallet[item.key] == true"
-                class="icon checked ion-ios-star">
-              </i>
-              <i href="" 
-                ng-show="Wallet[item.key] != true"
-                class="icon unchecked ion-ios-star-outline">
-              </i>
-              
-              
-            </ion-item>
-          </ion-list>
+          <div ng-repeat="item in ProductsMeta | orderBy: 'value.timestamp_creation'">
+            <featured-card></featured-card>
+          </div>
+    
+          
 
           
         </div>
