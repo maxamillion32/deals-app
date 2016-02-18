@@ -321,14 +321,17 @@ angular.module('starter.controllers-submit', [])
   
   // takes ProductImagesArray and sets in ProductsImages  
   function transformArrayToScreenshot(bannerBase64) {
-    $scope.ProductImages['screenshot1'] = bannerBase64;
-    Utils.resizeImageSoft("canvas9", bannerBase64, $scope.dimensions["screenshot"].w, $scope.dimensions["screenshot"].h).then(
-      function(iconBase64){
-          $scope.ProductImages['icon'] = iconBase64;
-      }, function(error){
-          Codes.handleError();
-      }
-    )
+    $scope.ProductImages = {};
+    if(bannerBase64 != null) {
+      $scope.ProductImages['screenshot1'] = bannerBase64;
+      Utils.resizeImageSoft("canvas9", bannerBase64, $scope.dimensions["screenshot"].w, $scope.dimensions["screenshot"].h).then(
+        function(iconBase64){
+            $scope.ProductImages['icon'] = iconBase64;
+        }, function(error){
+            Codes.handleError();
+        }
+      )
+    };
   };
   
   // ** depreciated

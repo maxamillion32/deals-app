@@ -35,7 +35,7 @@ angular.module('starter.services-cordova-camera', [])
 		    sourceType :        sourceType, 
 		    allowEdit :         true,
 		    targetWidth:        targetSizeTarget.w,
-            targetHeight:       targetSizeTarge.ht,
+            targetHeight:       targetSizeTarge.h,
 		    encodingType:       Camera.EncodingType.JPEG,
 		    popoverOptions:     CameraPopoverOptions,
 		    saveToPhotoAlbum:   false
