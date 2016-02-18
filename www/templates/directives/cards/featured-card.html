@@ -7,18 +7,30 @@
     ng-src="{{getProductImage(item.key)}}">
     
   <h2>
-      {{item.value.title}}  
+      
+      
+      
+      {{item.value.title}}   <br><br>
+      
+      <span>
+        <i class="icon ion-ios-arrow-up"></i>
+        {{item.index.upvotes_count}}
+        &nbsp;
+        <i class="ion-ios-chatbubble"></i>
+        {{item.index.comments_count}}
+      </span> 
+  
   </h2>
   
   <span id="price">
     <div ng-switch="item.value.productType">
       <div ng-switch-when="local">
-        <span class="old-price">${{item.value.price_old}}</span>
-        <span class="offer-value">${{item.value.price_now}}</span>
+        <span class="old-price">£{{item.value.price_old}}</span>
+        <span class="offer-value">£{{item.value.price_now}}</span>
       </div>
       <div ng-switch-when="online">
-        <span class="old-price">${{item.value.price_old}}</span>
-        <span class="offer-value">${{item.value.price_now}}</span>
+        <span class="old-price">£{{item.value.price_old}}</span>
+        <span class="offer-value">£{{item.value.price_now}}</span>
       </div>
       <div ng-switch-when="voucher">
         <span class="offer-value">{{item.value.discount_perc}}% off!</span>
@@ -40,6 +52,8 @@
       class="unchecked ion-ios-star">
     </a>
   </span>
+  
+  
 
 </div>
 <!-- // custom item card -->

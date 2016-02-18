@@ -10,18 +10,29 @@
       ng-src="{{getProductIcon(ProductsMeta[productType][$index + 0 + slideCount.iter].key)}}">
         
       <h2>
-          {{ProductsMeta[productType][$index + 0 + slideCount.iter].value.title}}  
+          {{ProductsMeta[productType][$index + 0 + slideCount.iter].value.title}} 
+          
+          <br><br>
+      
+          <span>
+            <i class="icon ion-ios-arrow-up"></i>
+            {{ProductsMeta[productType][$index + 0 + slideCount.iter].index.upvotes_count}}
+            &nbsp;
+            <i class="ion-ios-chatbubble"></i>
+            {{ProductsMeta[productType][$index + 0 + slideCount.iter].index.comments_count}}
+          </span> 
+      
       </h2>
       
       <span id="price">
         <div ng-switch="ProductsMeta[productType][$index + 0 + slideCount.iter].value.productType">
           <div ng-switch-when="local">
-            <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
-            <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
+            <span class="old-price">£{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">£{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
           </div>
           <div ng-switch-when="online">
-            <span class="old-price">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
-            <span class="offer-value">${{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
+            <span class="old-price">£{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">£{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.price_now}}</span>
           </div>
           <div ng-switch-when="voucher">
             <span class="offer-value">{{ProductsMeta[productType][$index + 0 + slideCount.iter].value.discount_perc}}% off!</span>
@@ -41,6 +52,7 @@
           class="unchecked ion-ios-star">
         </a>
       </span>
+      
 
     </div>
     <!-- // custom item card -->
@@ -59,17 +71,30 @@
         
       <h2>
           {{ProductsMeta[productType][$index + 1 + slideCount.iter].value.title}}  
+          
+          <br><br>
+      
+          <span>
+            <i class="icon ion-ios-arrow-up"></i>
+            {{ProductsMeta[productType][$index + 1 + slideCount.iter].index.upvotes_count}}
+            &nbsp;
+            <i class="ion-ios-chatbubble"></i>
+            {{ProductsMeta[productType][$index + 1 + slideCount.iter].index.comments_count}}
+          </span> 
+          
       </h2>
+      
+      
       
       <span id="price">
         <div ng-switch="ProductsMeta[productType][$index + 1 + slideCount.iter].value.productType">
           <div ng-switch-when="local">
-            <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
-            <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
+            <span class="old-price">£{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">£{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
           </div>
           <div ng-switch-when="online">
-            <span class="old-price">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
-            <span class="offer-value">${{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
+            <span class="old-price">£{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_old}}</span>
+            <span class="offer-value">£{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.price_now}}</span>
           </div>
           <div ng-switch-when="voucher">
             <span class="offer-value">{{ProductsMeta[productType][$index + 1 + slideCount.iter].value.discount_perc}}% off!</span>
@@ -89,6 +114,7 @@
           class="unchecked ion-ios-star">
         </a>
       </span>
+    
 
     </div>
     <!-- // custom item card -->

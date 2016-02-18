@@ -87,10 +87,14 @@ $greylight: #f2f2f2
   position: absolute;
   top: 0px;
   left: 0;
-  width: 100%;
   text-align: left;
   padding-left: 10px;
-  padding-top: 5px; }
+  padding-top: 5px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 5px;
+  margin: 5px; }
 
 .custom-item-card #save {
   position: absolute;
@@ -115,6 +119,17 @@ $greylight: #f2f2f2
   color: #fff;
   text-align: left;
   background: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  font-size: 14px;
+  margin: 0px;
+  width: 100%; }
+
+.custom-item-card #interaction {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  color: #fff;
+  text-align: right;
   padding: 10px;
   font-size: 14px;
   margin: 0px;
