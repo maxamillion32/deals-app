@@ -279,7 +279,7 @@ angular.module('starter.controllers-submit', [])
         }
     });
     function proceed(sourceTypeIndex) {
-      CordovaCamera.newImageTest(sourceTypeIndex, $scope.dimensions.screenshot).then(
+      CordovaCamera.newImage(sourceTypeIndex, $scope.dimensions.screenshot).then(
         function(bannerBase64){
           // --> process
           transformArrayToScreenshot(bannerBase64);

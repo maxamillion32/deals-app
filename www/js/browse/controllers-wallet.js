@@ -30,6 +30,7 @@ angular.module('starter.controllers-wallet', [])
 
   $scope.ProductsMeta = {};
   $scope.ProductsImage = {};
+  $scope.ProductsScreenshots = {};
   
   // fn latest
   $scope.loadWalletMeta = function() {
@@ -47,7 +48,7 @@ angular.module('starter.controllers-wallet', [])
               $scope.$broadcast('scroll.refreshComplete');
               
               // @dependency
-              loadProductsIcons(ProductsMeta)
+              loadProductsScreenshots(ProductsMeta)
               bindWalletList(ProductsMeta);
               
           } else {
@@ -80,8 +81,8 @@ angular.module('starter.controllers-wallet', [])
       return $scope.ProductsMeta[key];
   };
   $scope.getProductImage = function(productId) {
-    if($scope.ProductsImage.hasOwnProperty(productId)) {
-      return $scope.ProductsImage[productId].screenshot1;
+    if($scope.ProductsScreenshots.hasOwnProperty(productId)) {
+      return $scope.ProductsScreenshots[productId];
     }
   };
   $scope.getProductIcon = function(productId) {
@@ -90,12 +91,12 @@ angular.module('starter.controllers-wallet', [])
     }
   };
   
-  function loadProductsIcons(ProductsMeta) {
+  function loadProductsScreenshots(ProductsMeta) {
     angular.forEach(ProductsMeta, function(value, productId){
-      Products.getProductIcon(productId).then(
+      Products.getProductIconLarge(productId).then(
         function(ProductImages){
           if(ProductImages != null) {
-            $scope.ProductsImage[productId] = ProductImages;
+            $scope.ProductsScreenshots[productId] = ProductImages.screenshot1;
           }
         }
       )
