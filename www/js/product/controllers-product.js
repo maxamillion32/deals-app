@@ -213,7 +213,11 @@ angular.module('starter.controllers-product', [])
   // ** can be put in service for consistency
   var tempPressed = false;
   $scope.walletButtonPressed = function(productId) {
-
+    
+    if(!$scope.AuthData.hasOwnProperty('uid')) {
+      Utils.showMessage('Please sign in to save deals', 1500);
+    };
+    
     if($scope.AuthData.hasOwnProperty('uid') && !tempPressed) {
       tempPressed = true;
       
@@ -246,6 +250,11 @@ angular.module('starter.controllers-product', [])
   };
   
   $scope.upVote = function(productId) {
+    
+    if(!$scope.AuthData.hasOwnProperty('uid')) {
+      Utils.showMessage('Please sign in to upvote deals', 1500);
+    };
+    
     if($scope.AuthData.hasOwnProperty('uid')) {
       Upvotes.post(productId, $scope.AuthData.uid).then(
         function(success){

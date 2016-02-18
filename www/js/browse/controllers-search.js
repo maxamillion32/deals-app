@@ -19,7 +19,15 @@ angular.module('starter.controllers-search', [])
     sortMethod: 'timestamp_creation',
     q: $stateParams.q
   };
-
+  
+   $scope.$on('$ionicView.leave', function(e) {
+    $scope.AuthData = Auth.AuthData;
+    $scope.Wallet = {};
+    $scope.ProductsMeta = {};
+    $scope.ProductsIcons = {};
+    $scope.ProductsScreenshots = {};
+  });
+  
   $scope.$on('$ionicView.enter', function(e) {
     $scope.AuthData = Auth.AuthData;
     $scope.status['q'] = $stateParams.q;
@@ -125,6 +133,10 @@ angular.module('starter.controllers-search', [])
   
   var tempPressed = false;
   $scope.walletButtonPressed = function(productId) {
+    
+    if(!$scope.AuthData.hasOwnProperty('uid')) {
+      Utils.showMessage('Please sign in to save deals', 1500);
+    };
     
     if($scope.AuthData.hasOwnProperty('uid') && !tempPressed) {
       tempPressed = true;

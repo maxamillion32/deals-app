@@ -211,6 +211,10 @@ angular.module('starter.controllers-live', [])
   var tempPressed = false;
   $scope.walletButtonPressed = function(productId) {
     
+    if(!$scope.AuthData.hasOwnProperty('uid')) {
+      Utils.showMessage('Please sign in to save deals', 1500);
+    };
+    
     if($scope.AuthData.hasOwnProperty('uid') && !tempPressed) {
       tempPressed = true;
       

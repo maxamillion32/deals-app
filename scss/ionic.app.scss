@@ -23,9 +23,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Colors
 // -------------------------------
-$greylight:                           #f2f2f2 !default;
+$greylight:                           rgba(234,234,234,1) !default;//#f2f2f2 !default;
 $positive:                            #70AD47 !default;
 $assertive:                           #ED7D31 !default;
+$blue:                                #5F9BD5 !default;
+$bluelight:                           #C8D7F4 !default;
+
 
 $greynormal:                           #A5A5A5 !default;
 
@@ -53,7 +56,30 @@ $button-stable-border:            rgba(0,0,0,0) !default;
 $button-stable-active-bg:         #e5e5e5 !default;
 $button-stable-active-border:     #a2a2a2 !default;
 
+.button.button-assertive.button-icon {
+    color: $assertive !important;
+    background: rgba(0,0,0,0) !important;
+}
 
+
+// Menu item
+// -------------------------------
+.item-menu i {
+    color: $positive !important;
+}
+.item-divider {
+    background: $greylight !important;
+}
+
+// Input
+// -------------------------------
+input {
+    border-bottom: 1px solid $blue !important;
+    max-width: 95% !important;
+}
+input.input-large {
+    width: 100% !important;
+}
 
 // Slidebox Intro
 // -------------------------------
@@ -78,7 +104,8 @@ $button-stable-active-border:     #a2a2a2 !default;
 .input-label {
     width: 100% !important;
     text-align: left !important;
-    font-weight: 600 !important;
+    color: $assertive !important;
+    font-style: italic !important;
 }
 
 // Profile
@@ -255,7 +282,7 @@ span.small {
 .tag {
     padding: 5px;
     border-radius: 6px;
-    background: $positive;
+    background: $assertive;
     color: #fff;
     margin-right: 10px;
     line-height: 50px !important;
@@ -285,6 +312,28 @@ span.small {
 // Placeholders
 // -------------------------------
 // see backup
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: $bluelight;
+    font-style: italic;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $bluelight;
+    font-style: italic;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $bluelight;
+    font-style: italic;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: $bluelight;
+    font-style: italic;
+}
+:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+    color: $bluelight;
+    font-style: italic;
+}
+
 
 
 // Include all of Ionic
