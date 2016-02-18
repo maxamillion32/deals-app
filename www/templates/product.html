@@ -108,11 +108,11 @@
             <label class="item item-input">
               <textarea rows="3" placeholder="Add comment" ng-model="FormData.commentValue"></textarea>
             </label>
-            <button class="button button-block button-stable" ng-click="addComment()">Submit</button>
+            <button class="button button-block button-assertive" ng-click="addComment()">Submit</button>
           </div>
           
           <div ng-show="!status.commentsLoaded">
-            <button class="button button-block button-clear" ng-click="loadComments()">Load comments</button>
+            <button class="button button-block button-stable" ng-click="loadComments()">Load comments</button>
           </div>
           
           <div ng-show="status.commentsLoaded" ng-switch="status.commentsLoading">
